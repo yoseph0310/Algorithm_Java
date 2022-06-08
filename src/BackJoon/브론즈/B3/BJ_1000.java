@@ -1,4 +1,4 @@
-package BackJoon.브론즈;
+package BackJoon.브론즈.B3;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
