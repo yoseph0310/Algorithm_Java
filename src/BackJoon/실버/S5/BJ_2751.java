@@ -23,7 +23,6 @@ public class BJ_2751 {
         for (int value : list) {
             sb.append(value).append('\n');
         }
-
         System.out.println(sb);
     }
 }
