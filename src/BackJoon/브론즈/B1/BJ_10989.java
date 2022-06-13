@@ -2,9 +2,6 @@ package BackJoon.브론즈.B1;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class BJ_10989 {
     public static void main(String[] args) throws Exception {
