@@ -16,10 +16,9 @@ public class BJ_10989 {
         }
 
         for (int i = 0; i < arr.length; i++) {
-            if(arr[i] > 0){
-                for (int j = 0; j < arr[i]; j++) {
-                    sb.append(i).append('\n');
-                }
+            while(arr[i] > 0){
+                sb.append(i).append('\n');
+                arr[i]--;
             }
         }
 
