@@ -116,4 +116,5 @@ public class BJ_10866 {
             return deque[back];
         }
     }
+
 }
