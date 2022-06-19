@@ -108,6 +108,7 @@ public class BJ_10866 {
             return deque[front + 1];
         }
     }
+
     public static int back(){
         if (size == 0){
             return -1;
