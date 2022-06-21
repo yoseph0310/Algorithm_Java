@@ -23,9 +23,21 @@ public class BJ_10867_Counting {
             if(arr[i] >= 0){
                 plusNum[arr[i]] = 1;
             } else {
-                minusNum[arr[i] - 1] = 1;
+                minusNum[arr[i] * (-1)] = 1;
             }
         }
 
+        for (int i = 1000; i >= 0; i--) {
+            if (minusNum[i] > 0){
+                bw.write(-i + " ");
+            }
+        }
+        for (int i = 0; i < 1001; i++) {
+            if (plusNum[i] > 0){
+                bw.write(i + " ");
+            }
+        }
+        bw.flush();
+        bw.close();
     }
 }
