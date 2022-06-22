@@ -39,5 +39,6 @@ public class BJ_10867_Counting {
         }
         bw.flush();
         bw.close();
+
     }
 }
