@@ -65,5 +65,6 @@ public class BJ_1406 {
         }
         bw.flush();
         bw.close();
+
     }
 }
