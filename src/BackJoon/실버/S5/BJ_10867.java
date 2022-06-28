@@ -22,7 +22,6 @@ public class BJ_10867 {
         for (int i = 0; i < N; i++) {
             hs.add(Integer.parseInt(st.nextToken()));
         }
-
         ArrayList<Integer> al = new ArrayList<>(hs);
         Collections.sort(al);
 
