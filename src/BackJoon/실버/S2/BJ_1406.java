@@ -63,7 +63,9 @@ public class BJ_1406 {
         while(!rightSt.isEmpty()){
             bw.write(rightSt.pop());
         }
+
         bw.flush();
         bw.close();
+
     }
 }

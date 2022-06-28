@@ -57,5 +57,4 @@ public class BJ_1920 {
             return search(num, N, mid + 1, end);
         }
     }
-
 }
