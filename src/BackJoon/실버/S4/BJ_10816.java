@@ -4,12 +4,12 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class BJ_10816 {
 
     static int [] card;
-    static int [] num;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,15 +22,52 @@ public class BJ_10816 {
         for (int i = 0; i < N; i++) {
             card[i] = Integer.parseInt(st.nextToken());
         }
+        Arrays.sort(card);
 
         int M = Integer.parseInt(br.readLine());
-        num = new int[M];
+
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < M; i++) {
-            num[i] = Integer.parseInt(st.nextToken());
+            int key = Integer.parseInt(st.nextToken());
+
+            bw.write(upperBound(card, key) - lowerBound(card, key) + " ");
+        }
+        bw.flush();
+        bw.close();
+    }
+
+    private static int lowerBound(int[] arr, int key){
+        int lo = 0;
+        int hi = arr.length;
+
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+
+            if (key <= arr[mid]) {
+                hi = mid;
+            }
+            else {
+                lo = mid + 1;
+            }
         }
 
+        return lo;
+    }
+    private static int upperBound(int[] arr, int key){
+        int lo = 0;
+        int hi = arr.length;
 
+        while(lo < hi){
+            int mid = (lo + hi) / 2;
+
+            if (key < arr[mid]) {
+                hi = mid;
+            }
+            else {
+                lo = mid + 1;
+            }
+        }
+        return lo;
     }
 
 }
