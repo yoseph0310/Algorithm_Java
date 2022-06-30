@@ -50,7 +50,6 @@ public class BJ_10816 {
                 lo = mid + 1;
             }
         }
-
         return lo;
     }
     private static int upperBound(int[] arr, int key){
