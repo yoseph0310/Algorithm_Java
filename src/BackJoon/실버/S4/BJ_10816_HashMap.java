@@ -19,7 +19,6 @@ public class BJ_10816_HashMap {
 
         for (int i = 0; i < N; i++) {
             int key = Integer.parseInt(st.nextToken());
-
             hm.put(key, hm.getOrDefault(key, 0) + 1);
         }
 
