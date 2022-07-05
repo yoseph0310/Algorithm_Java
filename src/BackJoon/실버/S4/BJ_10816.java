@@ -25,7 +25,6 @@ public class BJ_10816 {
         Arrays.sort(card);
 
         int M = Integer.parseInt(br.readLine());
-
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < M; i++) {
             int key = Integer.parseInt(st.nextToken());
