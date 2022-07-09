@@ -26,5 +26,6 @@ public class BJ_10816_Counting {
         }
         bw.flush();
         bw.close();
+
     }
 }
