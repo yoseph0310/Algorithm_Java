@@ -31,5 +31,6 @@ public class BJ_10816_HashMap {
         }
         bw.flush();
         bw.close();
+
     }
 }
