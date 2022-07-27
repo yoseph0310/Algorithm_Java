@@ -75,7 +75,6 @@ public class BJ_5430 {
                 }
             }
         }
-
         sb.append(']').append('\n');
     }
 }
