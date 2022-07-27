@@ -9,7 +9,7 @@ public class 행렬의덧셈 {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                answer[i][j] = arr1[i][j] + arr[i][j];
+                answer[i][j] = arr1[i][j] + arr2[i][j];
             }
         }
 
