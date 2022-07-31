@@ -5,7 +5,7 @@ import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-public class _123더하기 {
+public class BJ_9095 {
 
     static int[] dp = new int[11];
 
