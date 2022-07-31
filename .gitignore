@@ -4,8 +4,11 @@
 # iml
 Algorithm_Java.iml
 
-# test Class
+#  BOJ test Class
 Main.java
+
+# Programmers test Class
+Solution.java
 
 # out
 out
