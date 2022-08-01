@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class BJ_9663 {
-
     static int N;
     static int cnt = 0;
     static int [] arr;
