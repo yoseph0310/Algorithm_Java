@@ -35,6 +35,7 @@ public class BJ_9663 {
             }
         }
     }
+
     public static boolean Possibility(int col){
         for (int i = 0; i < col; i++) {
             if(arr[col] == arr[i]){
