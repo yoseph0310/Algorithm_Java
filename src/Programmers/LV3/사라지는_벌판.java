@@ -48,7 +48,7 @@ public class 사라지는_벌판 {
     }
 
     public boolean isValid(int n_x1, int n_y1, int[][] board){
-        if(0<= n_x1 && n_x1 < boardRowLen && 0 <= n_y1 && n_y1 < boardColLen && board[n_x1][n_y1] != 0){
+        if (0<= n_x1 && n_x1 < boardRowLen && 0 <= n_y1 && n_y1 < boardColLen && board[n_x1][n_y1] != 0){
             return true;
         }
         else {
