@@ -14,16 +14,16 @@ public class BJ_1978 {
         int cnt = 0;
 
         st = new StringTokenizer(br.readLine());
-        for (int i = 1; i < N+1; i++) {
+        while(st.hasMoreTokens()){
             boolean isPrime = true;
 
             int num = Integer.parseInt(st.nextToken());
 
-            if(num == 1){
+            if (num == 1){
                 continue;
             }
-            for (int j = 2; j <= Math.sqrt(num) ; j++) {
-                if(num % i == 0){
+            for (int i = 2; i <= Math.sqrt(num) ; i++) {
+                if (num % i == 0){
                     isPrime = false;
                     break;
                 }
