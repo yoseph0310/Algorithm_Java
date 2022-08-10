@@ -12,18 +12,15 @@ public class BJ_1929 {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
+        boolean[] prime = new boolean[M+1];
 
+        for (int i = 2; i <= M; i++) {
+            if(prime[i]) continue;
 
-    }
+            if(i >= N){
 
-    public static void make_prime(int n, int m){
-        for (int i = n; i < m; i++) {
-            if (i == 1){
-                continue;
-            }
-            for (int j = 2; j <= Math.sqrt(i) ; j++) {
-                if(i % j == 0)
             }
         }
     }
+
 }
