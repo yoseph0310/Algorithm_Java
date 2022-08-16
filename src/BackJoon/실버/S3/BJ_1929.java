@@ -18,7 +18,6 @@ public class BJ_1929 {
             if(prime[i]) continue;
 
             if(i >= N){
-
             }
         }
     }
