@@ -29,6 +29,7 @@ public class BJ_1929 {
         bw.close();
     }
 
+<<<<<<< HEAD
     public static void get_prime(){
         prime[0] = prime[1] = true;
 
@@ -36,6 +37,9 @@ public class BJ_1929 {
             if (prime[i]) continue;
             for (int j = i * i; j < prime.length; j+=i) {
                 prime[j] = true;
+=======
+            if(i >= N){
+>>>>>>> c4e0528984943b83ca056cd6199c7222481eb268
             }
         }
     }
