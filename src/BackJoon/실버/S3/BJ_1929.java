@@ -7,7 +7,6 @@ import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
 public class BJ_1929 {
-
     public static boolean [] prime;
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
