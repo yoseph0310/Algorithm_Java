@@ -131,7 +131,6 @@ public class BJ_13460 {
         return -1;
     }
 }
-
 class Point{
     int rx;
     int ry;
