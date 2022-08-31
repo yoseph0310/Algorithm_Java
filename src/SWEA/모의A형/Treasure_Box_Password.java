@@ -38,6 +38,7 @@ public class Treasure_Box_Password {
             }
             String[] ans = set.toArray(new String[set.size()]);
             System.out.println("#"+t+" "+Long.parseLong(ans[K - 1], 16));
+
         }
     }
 
