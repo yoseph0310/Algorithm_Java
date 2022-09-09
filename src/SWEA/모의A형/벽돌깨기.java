@@ -34,7 +34,6 @@ public class 벽돌깨기 {
 
             ans = Integer.MAX_VALUE;
             process(0, total, board);
-
             System.out.println("#"+t+" "+ans);
         }
     }
