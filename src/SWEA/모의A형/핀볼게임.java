@@ -2,7 +2,6 @@ package SWEA.모의A형;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -13,15 +12,7 @@ public class 핀볼게임 {
     static ArrayList<Point>[] warmholeList;
 
     // 상 우 하 좌
-=======
-import java.util.StringTokenizer;
 
-public class 핀볼게임 {
-
-    static int ans, N;
-    static int[][] board;
-
->>>>>>> 3a9638a297b07d9fa96b3c7d22ce9a64b7371ac9
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
 
@@ -31,7 +22,6 @@ public class 핀볼게임 {
 
         int T = Integer.parseInt(br.readLine());
         for (int t = 1; t <= T; t++) {
-<<<<<<< HEAD
             ans = 0;
             N = Integer.parseInt(br.readLine());
             board = new int[N][N];
@@ -41,17 +31,12 @@ public class 핀볼게임 {
             for (int i = 6; i <= 10; i++) {
                 warmholeList[i] = new ArrayList<>();
             }
-=======
-            N = Integer.parseInt(br.readLine());
 
-            board = new int[N][N];
->>>>>>> 3a9638a297b07d9fa96b3c7d22ce9a64b7371ac9
 
             for (int i = 0; i < N; i++) {
                 st = new StringTokenizer(br.readLine());
                 for (int j = 0; j < N; j++) {
                     board[i][j] = Integer.parseInt(st.nextToken());
-<<<<<<< HEAD
                     if (board[i][j] == 0) departList.add(new Point(i, j));
                     if (board[i][j] >= 6) warmholeList[board[i][j]].add(new Point(i, j));
                 }
@@ -128,11 +113,3 @@ public class 핀볼게임 {
     }
 
 }
-=======
-                }
-            }
-
-        }
-    }
-}
->>>>>>> 3a9638a297b07d9fa96b3c7d22ce9a64b7371ac9
