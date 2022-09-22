@@ -95,7 +95,6 @@ public class Processor {
                 if (x == coreList[idx].x && y == coreList[idx].y) break;
                 board[x][y] = 0;
             }
-
         }
     }
 
