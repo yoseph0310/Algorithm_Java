@@ -8,6 +8,18 @@ public class 최댓값과최솟값 {
         String s = "1 2 3 4";
 
         System.out.println(solution(s));
+        System.out.println(solution2(s));
+    }
+    public static String solution2(String s){
+        String[] str = s.split(" ");
+        int min, max, n;
+        min = max = Integer.parseInt(str[0]);
+        for (int i = 0; i < str.length; i++) {
+            n = Integer.parseInt(str[i]);
+            if (min > n) min = n;
+            if (max < n) max = n;
+        }
+        return min + " " + max;
     }
 
     public static String solution(String s){
