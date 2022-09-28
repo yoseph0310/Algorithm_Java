@@ -24,10 +24,10 @@ public class BJ_3079 {
             times[i] = Integer.parseInt(br.readLine());
             max = Math.max(max, times[i]);
         }
-        getMinTime(N, M);
+        getMinTime(M);
         System.out.println(min);
     }
-    public static void getMinTime(int n, int m){
+    public static void getMinTime(int m){
         long low = 0;
         long high = max * m;
 
