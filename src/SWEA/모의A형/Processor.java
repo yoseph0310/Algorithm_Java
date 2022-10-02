@@ -97,7 +97,6 @@ public class Processor {
             }
         }
     }
-
     static class Point{
         int x, y;
 
