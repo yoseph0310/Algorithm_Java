@@ -10,11 +10,10 @@ public class BJ_14503_로봇청소기 {
 
     static int N, M, ans;
     static int[][] board;
-    static boolean[][] visited;
 
-    // 좌 상 우 하
-    static int[] dx = {0, -1, 0, 1};
-    static int[] dy = {-1, 0, 1, 0};
+    // 북 동 남 서
+    static int[] dx = {-1, 0, 1, 0};
+    static int[] dy = {0, 1, 0, -1};
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -36,7 +35,7 @@ public class BJ_14503_로봇청소기 {
             }
         }
 
-        bfs(r, c, d);
+        dfs(r, c, d);
         System.out.println(ans);
     }
     /*
@@ -44,16 +43,38 @@ public class BJ_14503_로봇청소기 {
     bfs 이던 dfs 이던 구현해놓을 것
     현재 방향 기준 좌측이라는 게 키포인트
      */
-    static void bfs(int r, int c, int dir){
-        Queue<Point> q = new LinkedList<>();
-        visited[r][c] = true;
+    static void dfs(int r, int c, int dir){
+        if (board[r][c] == 0) {
+            board[r][c] = 2;
+            ans++;
+        }
 
+        boolean flag = false;
+        int origin = dir;
         for (int d = 0; d < 4; d++) {
-            int nr = r + dx[d];
-            int nc = c + dy[d];
+            int nd = (dir + 3) % 4;
+            int nr = r + dx[nd];
+            int nc = c + dy[nd];
 
-            if (isBoundary(nr, nc)){
+            if (isBoundary(nr, nc)) {
+                if (board[nr][nc] == 0){
+                    dfs(nr, nc, nd);
+                    flag = true;
+                    break;
+                }
+            }
+            dir = (dir + 3) % 4;
+        }
 
+        if (!flag) {
+            int nd = (origin + 2) % 4;
+            int nr = r + dx[nd];
+            int nc = c + dy[nd];
+
+            if (isBoundary(nr, nc)) {
+                if (board[nr][nc] != 1) {
+                    dfs(nr, nc, origin);
+                }
             }
         }
     }
@@ -63,15 +84,6 @@ public class BJ_14503_로봇청소기 {
             return true;
         } else {
             return false;
-        }
-    }
-
-    static class Point{
-        int x, y;
-
-        public Point(int x, int y){
-            this.x = x;
-            this.y = y;
         }
     }
 }
