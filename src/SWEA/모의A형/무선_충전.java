@@ -148,6 +148,7 @@ public class 무선_충전 {
                     }
                 }
             }
+
             coverage++;
             if (coverage == bc.coverage){
                 break;
