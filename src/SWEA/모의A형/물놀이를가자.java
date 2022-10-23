@@ -78,6 +78,7 @@ public class 물놀이를가자 {
         }
         ans = sum;
     }
+
     static class Point{
         int x, y;
 
