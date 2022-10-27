@@ -60,7 +60,6 @@ public class BJ_1520_내리막길 {
         }
         return DP[x][y];
     }
-
     static class Point {
         int x, y;
 
