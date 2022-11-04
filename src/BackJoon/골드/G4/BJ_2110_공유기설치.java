@@ -55,4 +55,5 @@ public class BJ_2110_공유기설치 {
         }
         return cnt;
     }
+
 }
