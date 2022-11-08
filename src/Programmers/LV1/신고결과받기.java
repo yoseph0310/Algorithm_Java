@@ -45,5 +45,4 @@ public class 신고결과받기 {
         }
         return answer;
     }
-
 }
