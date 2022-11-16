@@ -26,7 +26,6 @@ public class BJ_2696_중앙값구하기 {
             System.out.println((M + 1) / 2);
 
         }
-
     }
 }
 
