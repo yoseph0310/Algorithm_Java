@@ -37,7 +37,6 @@ public class BJ_3079 {
 
             for (int time: times) {
                 long needPeople = mid / time;
-
                 if (sum >= m) break;
                 sum += needPeople;
             }
