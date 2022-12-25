@@ -44,7 +44,6 @@ public class BJ_1926_그림 {
                 picture_cnt++;
             }
         }
-
         System.out.println(picture_cnt);
         System.out.println(picture_width);
     }
