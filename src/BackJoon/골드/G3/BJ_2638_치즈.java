@@ -48,6 +48,7 @@ public class BJ_2638_치즈 {
     static void meltingCheese() {
         for (Iterator<Point> it = cheeseList.iterator(); it.hasNext(); ) {
             Point p = it.next();
+
             int x = p.x;
             int y = p.y;
             int cnt = 0;
