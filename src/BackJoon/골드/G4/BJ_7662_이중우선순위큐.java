@@ -34,7 +34,6 @@ public class BJ_7662_이중우선순위큐 {
                 }
             }
             System.out.println(que.size() == 0 ? "EMPTY" : que.lastKey() + " " + que.firstKey());
-
         }
     }
 }
