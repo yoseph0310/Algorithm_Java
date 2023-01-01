@@ -20,6 +20,7 @@ public class BJ_1927_최소힙 {
             } else {
                 pq.add(n);
             }
+
         }
 
         System.out.println(sb);
