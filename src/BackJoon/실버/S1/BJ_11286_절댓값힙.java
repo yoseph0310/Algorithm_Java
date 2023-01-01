@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class BJ_11286_절댓값힙 {
+
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
