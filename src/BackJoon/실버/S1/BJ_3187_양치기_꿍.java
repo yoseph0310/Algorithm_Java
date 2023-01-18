@@ -36,7 +36,6 @@ public class BJ_3187_양치기_꿍 {
         for (int i = 0; i < R; i++) {
             for (int j = 0; j < C; j++) {
                 if (board[i][j] != '#' && !visited[i][j]) {
-//                    System.out.println("start pos : " + i + ", " + j);
                     bfs(i, j);
                 }
             }
