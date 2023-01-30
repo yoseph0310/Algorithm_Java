@@ -45,6 +45,7 @@ public class BJ_3187_양치기_꿍 {
     }
 
     static void bfs(int x, int y) {
+
         Queue<Point> q = new LinkedList<>();
         q.add(new Point(x, y));
         visited[x][y] = true;
