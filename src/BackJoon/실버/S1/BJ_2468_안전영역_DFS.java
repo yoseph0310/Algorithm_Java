@@ -4,11 +4,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class BJ_2468_안전영역 {
+public class BJ_2468_안전영역_DFS {
 
     static int[][] board;
     static boolean[][] rained;
-    static int N, min, max, ans;
+    static int N, max, ans;
 
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
@@ -18,7 +18,6 @@ public class BJ_2468_안전영역 {
         StringTokenizer st;
 
         N = Integer.parseInt(br.readLine());
-        min = Integer.MAX_VALUE;
         max = 0;
         board = new int[N][N];
 
@@ -26,7 +25,7 @@ public class BJ_2468_안전영역 {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
                 board[i][j] = Integer.parseInt(st.nextToken());
-                min = Math.min(min, board[i][j]);
+
                 max = Math.max(max, board[i][j]);
             }
         }
