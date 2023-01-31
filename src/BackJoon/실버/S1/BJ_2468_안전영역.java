@@ -48,6 +48,7 @@ public class BJ_2468_안전영역 {
     }
 
     static int dfs(int i, int j, int height){
+
         rained[i][j] = true;
         for (int d = 0; d < 4; d++) {
             int nx = i + dx[d];
