@@ -8,100 +8,88 @@ import java.util.StringTokenizer;
 
 public class BJ_16933_벽_부수고_이동하기_3 {
 
-    static int N, M, K, ans;
-    static char[][] board;
+    static int n, m, k, ans;
+    static int[][] board;
+    static boolean[][][][] visited;
 
-    static int[] dx = {-1, 0, 1, 0};
-    static int[] dy = {0, 1, 0, -1};
+    static final int[] dx = {-1, 0, 1, 0};
+    static final int[] dy = {0, 1, 0, -1};
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
-        K = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
+        board = new int[n][m];
+        visited = new boolean[n][m][k+1][2];
 
-        board = new char[N][M];
-
-        for (int i = 0; i < N; i++) {
-            String input = br.readLine();
-            for (int j = 0; j < M; j++) {
-                board[i][j] = input.charAt(j);
+        for (int i = 0; i < n; i++) {
+            String s = br.readLine();
+            for (int j = 0; j < m; j++) {
+                board[i][j] = s.charAt(j) - '0';
             }
         }
 
-        ans = bfs();
+        ans = -1;
+        bfs();
+
         System.out.println(ans);
     }
 
-    static int bfs() {
-        Queue<Point> q = new LinkedList<>();
-        boolean[][][][] visited = new boolean[N][M][K + 1][2];
-
-        q.add(new Point(0, 0, 1, 0, 0));
+    static void bfs() {
+        Queue<Node> q = new LinkedList<>();
+        q.add(new Node(0, 0, 1, 0 ,0));
         visited[0][0][0][0] = true;
 
         while(!q.isEmpty()) {
-            Point cur = q.poll();
+            Node cur = q.poll();
 
-            int cx = cur.x;
-            int cy = cur.y;
+            int x = cur.x;
+            int y = cur.y;
 
-            if (cx == N-1 && cy == M-1) {
-                return cur.cnt;
+            if (x == n-1 && y == m-1) {
+                ans = cur.dist;
+                return;
             }
 
             for (int d = 0; d < 4; d++) {
-                int nx = cx + dx[d];
-                int ny = cy + dy[d];
+                int nx = x + dx[d];
+                int ny = y + dy[d];
 
-                if (isBoundary(nx, ny)) {
-                    // 벽이 아닌 경우
-                    if (board[nx][ny] == '0') {
-                        if (cur.isDay == 0 && !visited[nx][ny][cur.destroyedCnt][cur.isDay + 1]) {
-                            q.add(new Point(nx, ny, cur.cnt + 1, cur.destroyedCnt, cur.isDay + 1));
-                            visited[nx][ny][cur.destroyedCnt][cur.isDay + 1] = true;
-                        } else if (cur.isDay == 1 && !visited[nx][ny][cur.destroyedCnt][cur.isDay - 1]) {
-                            q.add(new Point(nx, ny, cur.cnt + 1, cur.destroyedCnt, cur.isDay - 1));
-                            visited[nx][ny][cur.destroyedCnt][cur.isDay - 1] = true;
-                        }
+                if (0 > nx || nx >= n || 0 > ny || ny >= m) continue;
+
+                if (board[nx][ny] == 0) {
+                    if (cur.day == 0 && !visited[nx][ny][cur.boom][cur.day+1]) {
+                        q.add(new Node(nx, ny, cur.dist + 1, cur.boom, cur.day + 1));
+                        visited[nx][ny][cur.boom][cur.day+1] = true;
+                    } else if (cur.day == 1 && !visited[nx][ny][cur.boom][cur.day-1]) {
+                        q.add(new Node(nx, ny, cur.dist + 1, cur.boom, cur.day - 1));
+                        visited[nx][ny][cur.boom][cur.day-1] = true;
                     }
-                    // 벽인 경우
-                    else {
-                        // 낮인 경우 부수고 감
-                        if (cur.isDay == 0 && cur.destroyedCnt < K && !visited[nx][ny][cur.destroyedCnt + 1][cur.isDay + 1]) {
-                            q.add(new Point(nx, ny, cur.cnt + 1, cur.destroyedCnt + 1, cur.isDay + 1));
-                            visited[nx][ny][cur.destroyedCnt + 1][cur.isDay + 1] = true;
-                        }
-                        // 밤인 경우 머무르고 기다림
-                        else if (cur.isDay == 1 && cur.destroyedCnt < K && !visited[nx][ny][cur.destroyedCnt][cur.isDay - 1]) {
-                            q.add(new Point(nx, ny, cur.cnt + 1, cur.destroyedCnt, cur.isDay - 1));
-                            visited[nx][ny][cur.destroyedCnt + 1][cur.isDay - 1] = true;
-                        }
-
+                } else {
+                    if (cur.boom < k && cur.day == 0 && !visited[nx][ny][cur.boom + 1][cur.day+1]) {
+                        q.add(new Node(nx, ny, cur.dist + 1, cur.boom + 1, cur.day + 1));
+                        visited[nx][ny][cur.boom+1][cur.day+1] = true;
+                    } else if (cur.boom < k && cur.day == 1 && !visited[x][y][cur.boom][cur.day-1]) {
+                        q.add(new Node(x, y, cur.dist + 1, cur.boom, cur.day - 1));
+                        visited[x][y][cur.boom][cur.day-1] = true;
                     }
                 }
             }
         }
-
-        return -1;
     }
+}
 
+class Node {
+    int x, y, dist, boom, day;
 
-    static boolean isBoundary(int x, int y) {
-        return 0 <= x && x < N && 0 <= y && y < M;
-    }
-
-    static class Point {
-        int x, y, cnt, destroyedCnt, isDay;
-
-        public Point(int x, int y, int cnt, int destroyedCnt, int isDay) {
-            this.x = x;
-            this.y = y;
-            this.cnt = cnt;
-            this.destroyedCnt = destroyedCnt;
-            this.isDay = isDay;
-        }
+    public Node(int x, int y, int dist, int boom, int day) {
+        this.x = x;
+        this.y = y;
+        this.dist = dist;
+        this.boom = boom;
+        this.day = day;
     }
 }
