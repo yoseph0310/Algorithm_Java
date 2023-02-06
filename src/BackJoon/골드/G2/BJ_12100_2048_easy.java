@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class BJ_12100 {
+public class BJ_12100_2048_easy {
 
     static int N;
     static int [][] board;
