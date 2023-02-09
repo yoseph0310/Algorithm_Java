@@ -5,7 +5,7 @@ import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-public class BJ_9663 {
+public class BJ_9663_NQueen {
     static int N;
     static int cnt = 0;
     static int [] arr;
@@ -20,6 +20,7 @@ public class BJ_9663 {
         bw.write(cnt+"");
         bw.flush();
         bw.close();
+
     }
 
     public static void nQueen(int depth){
