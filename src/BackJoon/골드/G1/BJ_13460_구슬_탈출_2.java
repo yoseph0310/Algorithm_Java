@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class BJ_13460 {
+public class BJ_13460_구슬_탈출_2 {
 
     static int N, M;
     static char [][] board;
