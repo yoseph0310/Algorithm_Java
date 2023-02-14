@@ -1,4 +1,4 @@
-package BackJoon.실버;
+package BackJoon.실버.S4;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
