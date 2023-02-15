@@ -1,4 +1,4 @@
-package BackJoon.골드;
+package BackJoon.골드.G3;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
