@@ -40,7 +40,6 @@ public class BJ_5427_불 {
                     else if (board[i][j] == '@') q.add(new Point(i, j));
                 }
             }
-
             ans = 0;
             bfs();
             if (ans == 0) System.out.println("IMPOSSIBLE");
