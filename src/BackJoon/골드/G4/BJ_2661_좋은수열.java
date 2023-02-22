@@ -35,6 +35,7 @@ public class BJ_2661_좋은수열 {
                 return false;
             }
         }
+
         return true;
     }
 }
