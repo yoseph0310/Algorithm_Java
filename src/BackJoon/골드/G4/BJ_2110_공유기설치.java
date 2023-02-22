@@ -38,6 +38,7 @@ public class BJ_2110_공유기설치 {
                 low = mid + 1;
             }
         }
+
         System.out.println(low - 1);
     }
 
