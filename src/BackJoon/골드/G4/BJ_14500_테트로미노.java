@@ -37,6 +37,7 @@ public class BJ_14500_테트로미노 {
         }
 
     }
+
     static void bfs(int i, int j){
         Queue<Point> q = new LinkedList<>();
         boolean [][] visited = new boolean[N][M];
