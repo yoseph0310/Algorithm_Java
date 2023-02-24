@@ -66,11 +66,45 @@ public class BJ_17140_이차원_배열과_연산 {
 
         map.forEach((k, v) -> pq.add(new Pair(k, v)));
 
+        int i = 1;
+        while (!pq.isEmpty()) {
+            Pair p = pq.poll();
+            A[key][i++] = p.number;
+            A[key][i++] = p.cnt;
+        }
 
+        yLength = Math.max(yLength, i);
+
+        while (i <= 99) {
+            A[key][i++] = 0;
+            A[key][i++] = 0;
+        }
     }
 
     static void C(int key) {
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        Map<Integer, Integer> map = new HashMap<>();
 
+        for (int i = 1; i <= xLength; i++) {
+            if (A[i][key] == 0) continue;
+            map.compute(A[i][key], (num, cnt) -> cnt == null ? 1 : cnt + 1);
+        }
+
+        map.forEach((k, v) -> pq.add(new Pair(k, v)));
+
+        int i = 1;
+        while (!pq.isEmpty()) {
+            Pair p = pq.poll();
+            A[i++][key] = p.number;
+            A[i++][key] = p.cnt;
+        }
+
+        xLength = Math.max(xLength, i);
+
+        while (i <= 99) {
+            A[i++][key] = 0;
+            A[i++][key] = 0;
+        }
     }
 
     static class Pair implements Comparable<Pair> {
