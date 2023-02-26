@@ -32,6 +32,7 @@ public class BJ_18808_스티커_붙이기 {
             }
             solve(sticker);
         }
+
         System.out.println(ans);
     }
 
