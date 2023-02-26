@@ -75,6 +75,7 @@ public class BJ_14890_경사로 {
                 }
             }
         }
+
         return true;
     }
     static int stoi(String s){
