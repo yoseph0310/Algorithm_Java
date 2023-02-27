@@ -42,9 +42,11 @@ public class BJ_1477_휴게소_세우기 {
 
     static boolean canMake(int mid) {
         int cnt = 0;
+
         for (int i = 1; i < list.size(); i++) {
             cnt += (list.get(i) - list.get(i - 1) - 1) / mid;
         }
+
         System.out.println(cnt);
         if (cnt > M) return true;
         return false;
