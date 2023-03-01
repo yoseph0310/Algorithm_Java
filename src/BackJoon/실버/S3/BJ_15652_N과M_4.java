@@ -4,6 +4,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+/*
+    중복 조합 기본
+ */
+
 public class BJ_15652_N과M_4 {
 
     static int N, M;
