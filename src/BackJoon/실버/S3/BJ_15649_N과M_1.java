@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 /*
-    조합 기본
+     순열 기본
  */
 
 public class BJ_15649_N과M_1 {
