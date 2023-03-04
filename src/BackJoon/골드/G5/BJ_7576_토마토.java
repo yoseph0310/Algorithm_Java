@@ -79,4 +79,5 @@ public class BJ_7576_토마토 {
             this.y = y;
         }
     }
+
 }
