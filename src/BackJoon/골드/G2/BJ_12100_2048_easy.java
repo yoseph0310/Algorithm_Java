@@ -150,4 +150,5 @@ public class BJ_12100_2048_easy {
             }
         }
     }
+
 }
