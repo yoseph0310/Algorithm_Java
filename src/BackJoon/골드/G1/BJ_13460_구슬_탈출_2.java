@@ -130,19 +130,20 @@ public class BJ_13460_구슬_탈출_2 {
         }
         return -1;
     }
-}
-class Point{
-    int rx;
-    int ry;
-    int bx;
-    int by;
-    int cnt;
-    
-    public Point(int rx, int ry, int bx, int by, int cnt){
-       this.rx = rx;
-       this.ry = ry;
-       this.bx = bx;
-       this.by = by;
-       this.cnt = cnt;
+
+    static class Point{
+        int rx;
+        int ry;
+        int bx;
+        int by;
+        int cnt;
+
+        public Point(int rx, int ry, int bx, int by, int cnt){
+            this.rx = rx;
+            this.ry = ry;
+            this.bx = bx;
+            this.by = by;
+            this.cnt = cnt;
+        }
     }
 }
