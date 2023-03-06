@@ -88,13 +88,6 @@ public class BJ_3190_뱀 {
         return time;
     }
 
-    static int nextDir(int cur, int dir) {
-        int next = (cur + dir) % 4;
-        if (next == -1) next = 3;
-
-        return next;
-    }
-
     static boolean isFinish(int x, int y) {
         if (x < 1 || x >= N + 1 || y < 1 || y >= N + 1) {
             return true;
