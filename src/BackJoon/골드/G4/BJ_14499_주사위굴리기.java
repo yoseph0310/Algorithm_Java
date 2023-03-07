@@ -89,6 +89,7 @@ public class BJ_14499_주사위굴리기 {
             dice[1] = board[x][y];
             board[x][y] = 0;
         }
+
         System.out.println(dice[3]);
     }
 }
