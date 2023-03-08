@@ -8,8 +8,10 @@ import java.util.StringTokenizer;
 
 public class BJ_14500_테트로미노 {
 
-    static int N, M, max;
+    static int N, M;
+    static int max = Integer.MIN_VALUE;
     static int[][] board;
+    static boolean[][] visited;
 
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, 1, 0, -1};
@@ -21,7 +23,7 @@ public class BJ_14500_테트로미노 {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
         board = new int[N][M];
-        max = 0;
+        visited = new boolean[N][M];
 
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
@@ -32,29 +34,39 @@ public class BJ_14500_테트로미노 {
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                bfs(i, j);
+                visited[i][j] = true;
+                solve(i, j, board[i][j], 1);
+                visited[i][j] = false;
             }
         }
 
+        System.out.println(max);
     }
 
-    static void bfs(int i, int j){
-        Queue<Point> q = new LinkedList<>();
-        boolean [][] visited = new boolean[N][M];
-        q.add(new Point(i, j));
-        visited[i][j] = true;
+    static void solve(int x, int y, int sum, int depth) {
+        if (depth == 4) {
+            max = Math.max(max, sum);
+            return;
+        }
 
-        while(q.isEmpty()){
+        for (int d = 0; d < 4; d++) {
+            int cx = x + dx[d];
+            int cy = y + dy[d];
 
+            if (0 <= cx && cx < N && 0 <= cy && cy < M) {
+                if (!visited[cx][cy]) {
+                    if (depth == 2) {
+                        visited[cx][cy] = true;
+                        solve(x, y, sum + board[cx][cy], depth + 1);
+                        visited[cx][cy] = false;
+                    }
+
+                    visited[cx][cy] = true;
+                    solve(cx, cy, sum + board[cx][cy], depth  +1);
+                    visited[cx][cy] = false;
+                }
+            }
         }
     }
 
-    static class Point{
-        int x, y;
-
-        public Point(int x, int y){
-            this.x = x;
-            this.y = y;
-        }
-    }
 }
