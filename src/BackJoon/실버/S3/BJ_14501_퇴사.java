@@ -29,6 +29,7 @@ public class BJ_14501_퇴사 {
 
             max = Math.max(max, DP[i]);
         }
+
         System.out.println(max);
     }
 }
