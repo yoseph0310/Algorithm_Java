@@ -21,6 +21,7 @@ public class BJ_14502_연구소 {
 
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
+
         board = new int[N][M];
 
         for (int i = 0; i < N; i++) {
@@ -31,19 +32,19 @@ public class BJ_14502_연구소 {
         }
 
         dfs(0);
-//        printBoard(board);
-//        printBoard(copy_board);
+
         System.out.println(ans);
     }
+
     static void dfs(int depth) {
-        if (depth == 3){
+        if (depth == 3) {
             bfs();
             return;
         }
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                if (board[i][j] == 0){
+                if (board[i][j] == 0) {
                     board[i][j] = 1;
                     dfs(depth + 1);
                     board[i][j] = 0;
@@ -51,30 +52,29 @@ public class BJ_14502_연구소 {
             }
         }
     }
-    static void bfs(){
-        Queue<Virus> q = new LinkedList<>();
+
+    static void bfs() {
+        Queue<Point> q = new LinkedList<>();
         copy_board = new int[N][M];
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 copy_board[i][j] = board[i][j];
-                if (copy_board[i][j] == 2) q.add(new Virus(i, j));
+
+                if (copy_board[i][j] == 2) q.add(new Point(i, j));
             }
         }
 
-        while(!q.isEmpty()){
-            Virus virus = q.poll();
-
-            int cx = virus.x;
-            int cy = virus.y;
+        while (!q.isEmpty()) {
+            Point cur = q.poll();
 
             for (int d = 0; d < 4; d++) {
-                int nx = cx + dx[d];
-                int ny = cy + dy[d];
+                int nx = cur.x + dx[d];
+                int ny = cur.y + dy[d];
 
-                if (isBoundary(nx, ny)){
+                if (isBoundary(nx, ny)) {
                     if (copy_board[nx][ny] == 0) {
-                        q.add(new Virus(nx, ny));
+                        q.add(new Point(nx, ny));
                         copy_board[nx][ny] = 2;
                     }
                 }
@@ -84,35 +84,21 @@ public class BJ_14502_연구소 {
         int cnt = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                if (copy_board[i][j] == 0){
-                    cnt++;
-                }
+                if (copy_board[i][j] == 0) cnt++;
             }
         }
-        ans = Math.max(ans, cnt);
+
+        ans = Math.max(cnt, ans);
     }
 
-    static boolean isBoundary(int x, int y){
-        if (0 <= x && x < N && 0 <= y && y < M){
-            return true;
-        } else {
-            return false;
-        }
+    static boolean isBoundary(int x, int y) {
+        return 0 <= x && x < N && 0 <= y && y < M;
     }
 
-    static void printBoard(int[][] board){
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    static class Virus {
+    static class Point {
         int x, y;
 
-        public Virus(int x, int y){
+        public Point(int x, int y) {
             this.x = x;
             this.y = y;
         }
