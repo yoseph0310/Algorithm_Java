@@ -38,11 +38,7 @@ public class BJ_14503_로봇청소기 {
         dfs(r, c, d);
         System.out.println(ans);
     }
-    /*
 
-    bfs 이던 dfs 이던 구현해놓을 것
-    현재 방향 기준 좌측이라는 게 키포인트
-     */
     static void dfs(int r, int c, int dir){
         if (board[r][c] == 0) {
             board[r][c] = 2;
