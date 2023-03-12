@@ -45,7 +45,6 @@ public class BJ_5427_불 {
             if (ans == 0) System.out.println("IMPOSSIBLE");
             else System.out.println(ans);
         }
-
     }
 
     static void bfs(){
