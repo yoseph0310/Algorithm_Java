@@ -92,6 +92,7 @@ public class BJ_3190_뱀 {
         if (x < 1 || x >= N + 1 || y < 1 || y >= N + 1) {
             return true;
         }
+
         for (Point s: snake) {
             if (x == s.x && y == s.y) return true;
         }
