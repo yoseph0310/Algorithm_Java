@@ -10,8 +10,6 @@ public class BJ_15683_감시 {
     static int N, M;
     static int min = Integer.MAX_VALUE;
 
-    static int[][] dist = {{}, {0, 1, 2, 3}, {}, {}, {}, {}};
-
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
