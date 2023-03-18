@@ -52,21 +52,13 @@ public class BJ_1520_내리막길 {
             int nx = x + dx[d];
             int ny = y + dy[d];
 
-            if (1 <= nx && nx < N && 1 <= ny && ny < M){
+            if (1 <= nx && nx <= N && 1 <= ny && ny <= M){
                 if (board[nx][ny] < board[x][y]){
                     DP[x][y] += dfs(nx, ny);
                 }
             }
+
         }
         return DP[x][y];
-    }
-
-    static class Point {
-        int x, y;
-
-        public Point(int x, int y){
-            this.x = x;
-            this.y = y;
-        }
     }
 }
