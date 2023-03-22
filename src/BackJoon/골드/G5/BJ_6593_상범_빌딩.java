@@ -8,8 +8,7 @@ import java.util.StringTokenizer;
 
 public class BJ_6593_상범_빌딩 {
 
-    static int L, R, C, ans;
-    static int sl, sr, sc;
+    static int L, R, C;
     static char[][][] building;
     static int[][][] board;
     static boolean[][][] visited;
