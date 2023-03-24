@@ -1,6 +1,4 @@
-package Z_DataStructure.LinkedList;
-
-import java.util.Comparator;
+package Z_DataStructure.LinkedList.Singly;
 
 public class SinglyLinkedListTest {
     public static void main(String[] args) {

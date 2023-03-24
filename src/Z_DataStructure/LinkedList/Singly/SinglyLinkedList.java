@@ -1,9 +1,8 @@
-package Z_DataStructure.LinkedList;
+package Z_DataStructure.LinkedList.Singly;
 
 import Z_DataStructure.List;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 

@@ -1,4 +1,4 @@
-package Z_DataStructure.LinkedList;
+package Z_DataStructure.LinkedList.Singly;
 
 public class Node<E> {
 
