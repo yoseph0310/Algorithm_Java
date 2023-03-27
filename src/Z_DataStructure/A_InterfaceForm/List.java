@@ -1,4 +1,4 @@
-package Z_DataStructure.InterfaceForm;
+package Z_DataStructure.A_InterfaceForm;
 
 /**
  * Java List Interface
