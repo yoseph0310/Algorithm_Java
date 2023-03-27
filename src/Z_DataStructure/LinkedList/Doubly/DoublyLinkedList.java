@@ -1,6 +1,6 @@
 package Z_DataStructure.LinkedList.Doubly;
 
-import Z_DataStructure.List;
+import Z_DataStructure.InterfaceForm.List;
 
 import java.util.NoSuchElementException;
 

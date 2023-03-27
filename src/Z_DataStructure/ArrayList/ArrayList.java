@@ -1,6 +1,6 @@
 package Z_DataStructure.ArrayList;
 
-import Z_DataStructure.List;
+import Z_DataStructure.InterfaceForm.List;
 
 import java.util.Arrays;
 
