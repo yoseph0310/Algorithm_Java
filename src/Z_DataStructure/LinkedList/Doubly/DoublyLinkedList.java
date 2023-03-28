@@ -1,10 +1,10 @@
 package Z_DataStructure.LinkedList.Doubly;
 
-import Z_DataStructure.A_InterfaceForm.List;
+import Z_DataStructure.A_InterfaceForm.ListInterface;
 
 import java.util.NoSuchElementException;
 
-public class DoublyLinkedList<E> implements List<E> {
+public class DoublyLinkedList<E> implements ListInterface<E> {
 
     private Node<E> head;
     private Node<E> tail;

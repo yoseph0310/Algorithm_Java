@@ -1,12 +1,12 @@
 package Z_DataStructure.LinkedList.Singly;
 
-import Z_DataStructure.A_InterfaceForm.List;
+import Z_DataStructure.A_InterfaceForm.ListInterface;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 
-public class SinglyLinkedList<E> implements List<E>, Cloneable {
+public class SinglyLinkedList<E> implements ListInterface<E>, Cloneable {
 
     private Node<E> head;
     private Node<E> tail;

@@ -1,10 +1,10 @@
 package Z_DataStructure.ArrayList;
 
-import Z_DataStructure.A_InterfaceForm.List;
+import Z_DataStructure.A_InterfaceForm.ListInterface;
 
 import java.util.Arrays;
 
-public class ArrayList<E> implements List<E>, Cloneable {
+public class ArrayList<E> implements ListInterface<E>, Cloneable {
 
     private static final int DEFAULT_CAPACITY = 10; // 최소(기본) 크기
     private static final Object[] EMPTY_ARRAY = {};

@@ -5,7 +5,7 @@ package Z_DataStructure.A_InterfaceForm;
  * List는 ArrayList, SinglyLinkedList, DoublyLinkedList에 의해 각각 구현된다.
  */
 
-public interface List<E> {
+public interface ListInterface<E> {
 
     /**
      * 리스트에 요소를 추가한다.
