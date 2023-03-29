@@ -55,7 +55,7 @@ public class BJ_24479_알고리즘_수업_깊이_우선_탐색_1 {
 
     static void dfs(int node) {
         visited[node] = true;
-        answer[node] = node;
+        answer[node] = ++idx;
 
         for (int i = 0; i < edges[node].size(); i++) {
             if (!visited[edges[node].get(i)]) {
