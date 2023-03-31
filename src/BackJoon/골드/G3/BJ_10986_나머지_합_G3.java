@@ -36,5 +36,6 @@ public class BJ_10986_나머지_합_G3 {
         }
 
         System.out.println(ans);
+
     }
 }
