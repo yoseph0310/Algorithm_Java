@@ -1,4 +1,4 @@
-package Z_DataStructure.Queue;
+package Z_DataStructure.Queue.ArrayQueue;
 
 import Z_DataStructure.A_InterfaceForm.QueueInterface;
 
