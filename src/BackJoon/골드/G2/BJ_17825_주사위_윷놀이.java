@@ -79,7 +79,26 @@ public class BJ_17825_주사위_윷놀이 {
     }
 
     static void setVisited(boolean[] visited, int idx, boolean check){
-        visited[idx] = check;
+        if (idx == 20 || idx == 29 || idx == 37 || idx == 46) {
+            visited[20] = check;
+            visited[29] = check;
+            visited[37] = check;
+            visited[46] = check;
+        } else if (idx == 26 || idx == 34 || idx == 43) {
+            visited[26] = check;
+            visited[34] = check;
+            visited[43] = check;
+        } else if (idx == 27 || idx == 35 || idx == 44) {
+            visited[27] = check;
+            visited[35] = check;
+            visited[44] = check;
+        } else if (idx == 28 || idx == 36 || idx == 45) {
+            visited[28] = check;
+            visited[36] = check;
+            visited[45] = check;
+        } else {
+            visited[idx] = check;
+        }
     }
 
     static int nextPoint(int nowIdx, int dice) {
@@ -97,7 +116,7 @@ public class BJ_17825_주사위_윷놀이 {
 
         if (nextIdx == 5) return 22;
         if (nextIdx == 10) return 31;
-        if (nextIdx == 15) return 29;
+        if (nextIdx == 15) return 39;
 
         return nextIdx;
     }
