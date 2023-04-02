@@ -1,5 +1,9 @@
 package Programmers.LV1;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class 명예의_전당_1 {
     public int[] solution(int k, int[] score) {
         int[] answer = new int[score.length];
