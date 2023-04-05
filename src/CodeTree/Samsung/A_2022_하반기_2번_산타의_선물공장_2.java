@@ -2,7 +2,6 @@ package CodeTree.Samsung;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
@@ -47,25 +46,11 @@ public class A_2022_하반기_2번_산타의_선물공장_2 {
                     getBeltInfo();
                     break;
             }
-
-
-//            System.out.println("-------- " + (i+1) + " 번 째 명령 실행 후 벨트와 선물 상태 --------");
-//            for (int b = 1; b <= N; b++) {
-//                int size = beltList[b].size();
-//                for (int j = 0; j < size; j++) {
-//                    int p_num = beltList[b].pollFirst();
-//                    System.out.print(p_num + " ");
-//                    beltList[b].addLast(p_num);
-//                }
-//                System.out.println();
-//            }
-//            System.out.println();
         }
     }
 
     // 1번
     static void buildFactory() {
-//        System.out.println("100번 명령 수행");
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
@@ -83,7 +68,6 @@ public class A_2022_하반기_2번_산타의_선물공장_2 {
 
     // 2번
     static void moveAllPresent() {
-//        System.out.print("200번 명령 수행 : ");
         int src = Integer.parseInt(st.nextToken());
         int dst = Integer.parseInt(st.nextToken());
 
@@ -96,7 +80,6 @@ public class A_2022_하반기_2번_산타의_선물공장_2 {
 
     // 3번
     static void moveFrontPresent() {
-//        System.out.print("300번 명령 수행 : ");
         int src = Integer.parseInt(st.nextToken());
         int dst = Integer.parseInt(st.nextToken());
 
@@ -132,7 +115,6 @@ public class A_2022_하반기_2번_산타의_선물공장_2 {
 
     // 4번
     static void dividePresent() {
-//        System.out.print("400번 명령 수행 : ");
         int src = Integer.parseInt(st.nextToken());
         int dst = Integer.parseInt(st.nextToken());
 
@@ -149,7 +131,6 @@ public class A_2022_하반기_2번_산타의_선물공장_2 {
 
     // 5번
     static void getPresentInfo() {
-//        System.out.print("500번 명령 수행 : ");
         int p_num = Integer.parseInt(st.nextToken());
         int b_idx = 0;      // 선물 p 가 올려져 있는 벨트 인덱스
 
@@ -206,7 +187,6 @@ public class A_2022_하반기_2번_산타의_선물공장_2 {
 
     // 6번
     static void getBeltInfo() {
-//        System.out.print("600번 명령 수행 : ");
         int b_num = Integer.parseInt(st.nextToken());
 
         Object[] arr = beltList[b_num].toArray();
