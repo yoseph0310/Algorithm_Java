@@ -2,7 +2,8 @@ package CodeTree.Samsung;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.HashMap;
+import java.util.StringTokenizer;
 
 public class B_2022_하반기_2번_산타의_선물공장_1 {
 
@@ -38,40 +39,240 @@ public class B_2022_하반기_2번_산타의_선물공장_1 {
      *
      * Q 번에 걸쳐 순서대로 진행하면서 원하는 결과를 출력.
      */
-    static final int MAX_M = 10;
-    static int N, M;
 
-    // ID 별로 상자 무게 저장
+    // 벨트의 최대는 10.
+    static final int MAX_M = 10;
+    static int N, M, Q;
+
+    // 물건이 어느 벨트에 있는지 관리. <물건의 num, 물건이 위치한 belt>
+    static HashMap<Integer, Integer> beltMap = new HashMap<>();
+    // 각 물건들의 다음 물건 정보 관리. 0이면 없는 것. <물건의 num, 다음 물건의 num>
+    static HashMap<Integer, Integer> nextMap = new HashMap<>();
+    // 각 물건들의 이전 물건 정보 관리. 0이면 없는 것. <물건의 num, 이전 물건의 num>
+    static HashMap<Integer, Integer> prevMap = new HashMap<>();
+    // 각 물건들의 무게 정보 관라. <물건의 num, 물건의 무게>
     static HashMap<Integer, Integer> weightMap = new HashMap<>();
 
-    // ID 에 해당하는 상자의 next 와 prev 값을 관리
-    // 0 이면 없다는 뜻
-    static HashMap<Integer, Integer> prevMap = new HashMap<>();
-    static HashMap<Integer, Integer> nextMap = new HashMap<>();
+    static boolean[] brokenBelt = new boolean[MAX_M];
 
-    // 각 벨트별 head, tail ID 관리
-    static int[] headArr = new int[MAX_M];
-    static int[] tailArr = new int[MAX_M];
+    static int[] heads = new int[MAX_M];
+    static int[] tails = new int[MAX_M];
 
-    // 망가진 벨트 표시
-    static boolean[] brokenBeltArr = new boolean[MAX_M];
+    // 1. 공장 설립
+    static void operation1(StringTokenizer st) {
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
-    // 물건 별로 벨트 번호 관리
-    // 벨트 번호 0 이면 사라진 것
-    static HashMap<Integer, Integer> beltNumMap = new HashMap<>();
+        int[] idxArr = new int[N];
+        int[] wArr = new int[N];
+
+        for (int i = 0; i < N; i++) {
+            idxArr[i] = Integer.parseInt(st.nextToken());
+        }
+        for (int i = 0; i < N; i++) {
+            wArr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        // 각 상자의 무게 정보 저장
+        for (int i = 0; i < N; i++) {
+            weightMap.put(idxArr[i], wArr[i]);
+        }
+
+        int size = N / M;
+        // head, tail 정보 저장 및 벨트 정보 저장 및 다음 이전 정보 저장
+        for (int i = 0; i < M; i++) {
+            heads[i] = idxArr[i * size];
+            tails[i] = idxArr[(i + 1) * size - 1];
+            for (int j = i * size; j < (i+1) * size; j++) {
+                beltMap.put(idxArr[j], i + 1);
+
+                if (j < (i + 1) * size - 1) {
+                    nextMap.put(idxArr[j], idxArr[j + 1]);
+                    prevMap.put(idxArr[j + 1], idxArr[j]);
+                }
+            }
+        }
+    }
+    // 2. 물건 하차
+    static int operation2(StringTokenizer st) {
+        int w_max = Integer.parseInt(st.nextToken());
+
+        int w_sum = 0;
+
+        // 1 ~ M 까지 순서대로 벨트를 보며 맨 앞에 있는 선물 중 w_max 이하 라면
+        for (int i = 0; i < M; i++) {
+            if (brokenBelt[i]) continue;
+
+            // 0 이면 없는 것.
+            if (heads[i] != 0) {
+                int idx = heads[i];
+                int w = weightMap.get(idx);
+
+                if (w <= w_max) {
+                    // TODO 하차
+                    w_sum += w;
+
+                    remove(idx, true);
+                }
+                // 지금 원소가 tail 일 수도 있음
+                else if (nextMap.get(idx) != 0){
+                    // TODO 맨 뒤로 보낸다.
+                    remove(idx, false);
+                    // 현재 물건(head)을 tail 로 보낸다.
+                    push(idx, tails[i]);
+                }
+            }
+        }
+
+        // TODO 하차된 상자 무게 총합 반환
+        return w_sum;
+    }
+
+    static void remove(int idx, boolean removeThisFromBelt) {
+        int b_num = beltMap.get(idx) - 1;
+
+        // 벨트 번호 제거
+        if (removeThisFromBelt) beltMap.put(idx, 0);
+
+        // 벨트에 원소 하나인 경우
+        if (heads[b_num] == tails[b_num]) {
+            heads[b_num] = tails[b_num] = 0;
+        }
+        // 제거하려는 원소가 맨 앞인 경우
+        else if (idx == heads[b_num]) {
+            int nextIdx = nextMap.get(idx);
+            heads[b_num] = nextIdx;
+            prevMap.put(nextIdx, 0);
+        }
+        // 제거하려는 원소가 맨 뒤인 경우
+        else if (idx == tails[b_num]) {
+            int prevIdx = prevMap.get(idx);
+            tails[b_num] = prevIdx;
+            nextMap.put(prevIdx, 0);
+        }
+        // 중간에 있는 경우
+        else {
+            int nextIdx = nextMap.get(idx);
+            int prevIdx = prevMap.get(idx);
+
+            nextMap.put(prevIdx, nextIdx);
+            prevMap.put(nextIdx, prevIdx);
+        }
+
+        nextMap.put(idx, 0);
+        prevMap.put(idx, 0);
+    }
+
+    static void push(int idx, int targetIdx) {
+        // TODO idx 를 targetIdx 뒤로 보낼 것이다.
+        nextMap.put(targetIdx, idx);
+        prevMap.put(idx, targetIdx);
+
+        int b_num = beltMap.get(targetIdx) - 1;
+        if (tails[b_num] == targetIdx) {
+            tails[b_num] = idx;
+        }
+    }
+
+    // 3. 물건 제거
+    static int operation3(StringTokenizer st) {
+        int r_id = Integer.parseInt(st.nextToken());
+
+        // 이미 삭제 됐으면 -1 반환
+        if (beltMap.getOrDefault(r_id, 0) == 0) {
+            return -1;
+        }
+
+        remove(r_id, true);
+        return r_id;
+    }
+    // 4. 물건 확인
+    static int operation4(StringTokenizer st) {
+        int f_id = Integer.parseInt(st.nextToken());
+
+        if (beltMap.getOrDefault(f_id, 0) == 0) {
+            return -1;
+        }
+
+        int b_num = beltMap.get(f_id) - 1;
+        // 맨 앞으로 가져오므로 맨 앞이 아닌 경우만 해당
+        if (heads[b_num] != f_id) {
+            int originHead = heads[b_num];
+            int originTail = tails[b_num];
+
+            // tail 을 f_id의 이전으로 바꾸고 f_id의 이전 노드는 없다고 바꾼다.
+            int newTail = prevMap.get(f_id);
+            tails[b_num] = newTail;
+            nextMap.put(newTail, 0);
+
+            // 원래 tail 의 다음으로 원래 head 를 가리키게 하고 원래 head 의 이전 노드로 원래 tail 로 바꾼다.
+            nextMap.put(originTail, originHead);
+            prevMap.put(originHead, originTail);
+
+            // 새로운 헤드로 f_id 로 설정한다.
+            heads[b_num] = f_id;
+        }
+
+        return b_num + 1;
+    }
+    // 5. 벨트 고장
+    static int operation5(StringTokenizer st) {
+        int b_num = Integer.parseInt(st.nextToken()) - 1; // -> 반환할 때는 +1 해줘야함 !!
+
+        if (brokenBelt[b_num]) {
+            return -1;
+        }
+
+        brokenBelt[b_num] = true;
+
+        if (heads[b_num] == 0) {
+            return b_num + 1;
+        }
+
+        int nextNum = b_num;
+        while (true) {
+            nextNum = (nextNum + 1) % M;
+
+            // 벨트가 망가지지 않았다면
+            if (!brokenBelt[nextNum]) {
+
+                // 벨트가 비어 있으면 그대로 옮긴다. b_num -> 에서 nextNum 으로
+                if (tails[nextNum] == 0) {
+                    heads[nextNum] = heads[b_num];
+                    tails[nextNum] = tails[b_num];
+                }
+                // 그렇지 않으면 맨 뒤로 머리넣고 tail 을 바꿔준다.
+                else {
+                    push(heads[b_num], tails[nextNum]);
+                    tails[nextNum] = tails[b_num];
+                }
+
+                // belt 정보를 nextNum 으로 바꾸고 현재 벨트를 모두 없는 것으로 처리하고 멈춘다.
+                int idx = heads[b_num];
+
+                while (idx != 0) {
+                    beltMap.put(idx, nextNum + 1);
+                    idx = nextMap.getOrDefault(idx, 0);
+                }
+
+                heads[b_num] = tails[b_num] = 0;
+                break;
+            }
+
+        }
+
+        return b_num + 1;
+    }
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-        StringTokenizer st;
 
-        int Q = Integer.parseInt(br.readLine());
-
+        Q = Integer.parseInt(br.readLine());
         for (int i = 0; i < Q; i++) {
-            st = new StringTokenizer(br.readLine());
+            StringTokenizer st = new StringTokenizer(br.readLine());
 
             int command = Integer.parseInt(st.nextToken());
-
             switch (command) {
                 case 100:
                     operation1(st);
@@ -88,226 +289,10 @@ public class B_2022_하반기_2번_산타의_선물공장_1 {
                 case 500:
                     sb.append(operation5(st)).append('\n');
                     break;
-
             }
         }
 
         System.out.println(sb);
-    }
-
-    // 공장 설립
-    static void operation1(StringTokenizer st) {
-        N = Integer.parseInt(st.nextToken());       // 선물 개수
-        M = Integer.parseInt(st.nextToken());       // 벨트 개수
-
-        int[] ids = new int[N];
-        int[] ws = new int[N];
-
-        for (int i = 0; i < N; i++) {
-            ids[i] = Integer.parseInt(st.nextToken());
-        }
-        for (int i = 0; i < N; i++) {
-            ws[i] = Integer.parseInt(st.nextToken());
-        }
-
-        // ID 마다의 무게를 관리
-        for (int i = 0; i < N; i++) {
-            weightMap.put(ids[i], ws[i]);
-        }
-
-        // 벨트 별 상자 목록 관리
-        int size = N / M;
-        for (int i = 0; i < M; i++) {
-            headArr[i] = ids[i * size];
-            tailArr[i] = ids[(i + 1) * size - 1];
-            for (int j = i * size; j < (i+1) * size; j++) {
-                // 상자 ID 마다 벨트 번호 기입
-                beltNumMap.put(ids[j], i + 1);
-
-                // next, prev 설정
-                if (j < (i + 1) * size - 1) {
-                    nextMap.put(ids[j], ids[j + 1]);
-                    prevMap.put(ids[j + 1], ids[j]);
-                }
-            }
-        }
-
-    }
-
-    // 물건 하차
-    static int operation2(StringTokenizer st) {
-        int w_max = Integer.parseInt(st.nextToken());
-
-        int w_sum = 0;
-
-        // TODO 1 ~ M 번 까지 순서대로 벨트를 보면서 각 벨트의 맨 앞(head)의 선물중 w_max 이하면 하차. 아니면 맨 뒤로 보낸다. 벨트에서 상자 빠지면 한칸씩 내려와야함
-        for (int i = 0; i < M; i++) {
-            if (brokenBeltArr[i]) {
-                continue;
-            }
-            // 벨트 head 확인
-            if (headArr[i] != 0) {
-                int id = headArr[i];
-                int w = weightMap.get(id);
-
-                // w_max 이하면 하차 시키고 무게 더함
-                if (w <= w_max) {
-                    w_sum += w;
-
-                    removeId(id, true);
-                }
-                // 그렇지 않다면 맨 뒤로 옮김
-                else if (nextMap.get(id) != 0){
-                    removeId(id, false);
-
-                    pushId(tailArr[i], id);
-                }
-            }
-        }
-
-        // TODO 하차된 상자 무게 총 합 반환
-        return w_sum;
-    }
-
-    static void pushId(int targetId, int id) {
-        nextMap.put(targetId, id);
-        prevMap.put(id, targetId);
-
-        int b_num = beltNumMap.get(targetId) - 1;
-        if (tailArr[b_num] == targetId) {
-            tailArr[b_num] = id;
-        }
-    }
-
-    static void removeId(int id, boolean removeBelt) {
-        int b_num = beltNumMap.get(id) - 1;
-
-        // 벨트 번호 제거
-        if (removeBelt) beltNumMap.put(id, 0);
-
-        // 하나 남았을 경우
-        if (headArr[b_num] == tailArr[b_num]) {
-            headArr[b_num] = tailArr[b_num] = 0;
-        }
-        // 제거 하려는 id 가 b_num 맨 앞일 경우
-        else if (id == headArr[b_num]) {
-            int nextId = nextMap.get(id);
-            headArr[b_num] = nextId;
-            prevMap.put(nextId, 0);
-        }
-        // 제거 하려는 id 가 b_num 맨 뒤일 경우
-        else if (id == tailArr[b_num]) {
-            int prevId = prevMap.get(id);
-            tailArr[b_num] = prevId;
-            nextMap.put(prevId, 0);
-        }
-        // 중간에 있는게 삭제 될 경우
-        else {
-            int prevId = prevMap.get(id);
-            int nextId = nextMap.get(id);
-
-            nextMap.put(prevId, nextId);
-            prevMap.put(nextId, prevId);
-        }
-
-        // next, prev 값 삭제
-        nextMap.put(id, 0);
-        prevMap.put(id, 0);
-    }
-
-    // 물건 제거
-    static int operation3(StringTokenizer st) {
-        int r_id = Integer.parseInt(st.nextToken());
-
-        // 이미 삭제된 상자라면 -1 출력 후 패스
-        if (beltNumMap.getOrDefault(r_id, 0) == 0) {
-            return -1;
-        }
-
-        // 해당 상자 제거
-        removeId(r_id, true);
-        return r_id;
-    }
-
-    // 물건 확인
-    static int operation4(StringTokenizer st) {
-        int f_id = Integer.parseInt(st.nextToken());
-
-        // 이미 삭제된 상자라면 -1 출력 후 패스
-        if (beltNumMap.getOrDefault(f_id, 0) == 0) {
-            return -1;
-        }
-
-        // 해당 상자를 찾아 이를 맨 앞으로 당긴다. head 가 아닌 경우에만 유효
-        int b_num = beltNumMap.get(f_id) - 1;
-        if (headArr[b_num] != f_id) {
-            int originTail = tailArr[b_num];
-            int originHead = headArr[b_num];
-
-            // tail 갱신
-            int curTail = prevMap.get(f_id);
-            tailArr[b_num] = curTail;
-            nextMap.put(curTail, 0);
-
-            // 기존 tail 의 next 를 head 로, head 의 prev 를 기존 tail 로 만듬
-            nextMap.put(originTail, originHead);
-            prevMap.put(originHead, originTail);
-
-            // 새로 head 를 지정
-            headArr[b_num] = f_id;
-        }
-
-        return b_num + 1;
-    }
-
-    // 벨트 고장
-    static int operation5(StringTokenizer st) {
-        int b_num = Integer.parseInt(st.nextToken());
-
-        b_num--;
-
-        if (brokenBeltArr[b_num]) {
-            return -1;
-        }
-
-
-
-        brokenBeltArr[b_num] = true;
-
-        if (headArr[b_num] == 0) {
-            return b_num + 1;
-        }
-
-        int nextNum = b_num;
-        while (true) {
-            nextNum = (nextNum + 1) % M;
-
-            // 최초로 망가지지 않은 벨트라면
-            if (!brokenBeltArr[nextNum]) {
-                // 벨트가 비어 있으면 그대로 옮긴다.
-                if (tailArr[nextNum] == 0) {
-                    headArr[nextNum] = headArr[b_num];
-                    tailArr[nextNum] = tailArr[b_num];
-                }
-                // 그렇지 않으면 맨 뒤에 머리부터 넣어주고 tail 을 바꿔준다.
-                else {
-                    pushId(tailArr[nextNum], headArr[b_num]);
-                    tailArr[nextNum] = tailArr[b_num];
-                }
-
-                int id = headArr[b_num];
-
-                while (id != 0) {
-                    beltNumMap.put(id, nextNum + 1);
-                    id = nextMap.getOrDefault(id, 0);
-                }
-
-                headArr[b_num] = tailArr[b_num] = 0;
-                break;
-            }
-        }
-
-        return b_num + 1;
     }
 
 }
