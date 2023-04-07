@@ -1,5 +1,7 @@
 package SWEA.모의A형;
 
+import Z_DataStructure.LinkedList.Doubly.Node;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -9,14 +11,16 @@ import java.util.StringTokenizer;
 
 public class 무선_충전 {
 
+    static int M, BC, ans;
+
     static ArrayList<BatteryCharge>[][] board;
-    static ArrayList<BatteryCharge> list;
+    static ArrayList<BatteryCharge> bcList;
+
+    static int[] personA;
+    static int[] personB;
 
     static int[] dx = {0, -1, 0, 1, 0};
     static int[] dy = {0, 0, 1, 0, -1};
-    static int[] personA;
-    static int[] personB;
-    static int ans;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -25,12 +29,15 @@ public class 무선_충전 {
         int T = Integer.parseInt(br.readLine());
         for (int t = 1; t <= T; t++) {
             st = new StringTokenizer(br.readLine());
-            int M = Integer.parseInt(st.nextToken());
-            int BC = Integer.parseInt(st.nextToken());
+
+            M = Integer.parseInt(st.nextToken());
+            BC = Integer.parseInt(st.nextToken());
+
             personA = new int[] {1, 1};
             personB = new int[] {10, 10};
+
             board = new ArrayList[11][11];
-            list = new ArrayList<>();
+            bcList = new ArrayList<>();
             ans = 0;
 
             int[] A = new int[M];
@@ -40,7 +47,6 @@ public class 무선_충전 {
             for (int i = 0; i < M; i++) {
                 A[i] = Integer.parseInt(st.nextToken());
             }
-
             st = new StringTokenizer(br.readLine());
             for (int i = 0; i < M; i++) {
                 B[i] = Integer.parseInt(st.nextToken());
@@ -52,72 +58,28 @@ public class 무선_충전 {
                 int x = Integer.parseInt(st.nextToken());
                 int c = Integer.parseInt(st.nextToken());
                 int p = Integer.parseInt(st.nextToken());
-                list.add(new BatteryCharge(x, y, c, p));
+
+                bcList.add(new BatteryCharge(x, y, c, p));
             }
 
-            for (BatteryCharge bc: list) {
-                bfs(bc);
+            for (BatteryCharge bc : bcList) {
+                init(bc);
             }
 
-            choiceBC(personA, personB);
+            charge(personA, personB);
 
             for (int i = 0; i < M; i++) {
-                move(A, B, i);
-                choiceBC(personA, personB);
+                movePerson(A, B, i);
+                charge(personA, personB);
             }
 
             System.out.println("#"+t+" "+ans);
         }
     }
 
-    static void move(int[] A, int[] B, int idx){
-        personA[0] += dx[A[idx]];
-        personA[1] += dy[A[idx]];
-        personB[0] += dx[B[idx]];
-        personB[1] += dy[B[idx]];
-    }
-
-    static void choiceBC(int[] personA, int[] personB){
-        int tempMax = Integer.MIN_VALUE;
-
-        // A의 위치에 BC 리스트가 있을 때
-        if (board[personA[0]][personA[1]] != null){
-            // B의 위치에 BC 리스트가 있을 때
-            if (board[personB[0]][personB[1]] != null) {
-                for (BatteryCharge bcA : board[personA[0]][personA[1]]) {
-                    for (BatteryCharge bcB : board[personB[0]][personB[1]]) {
-                        if (bcA.equals(bcB)) {
-                            tempMax = Math.max(tempMax, bcA.p);
-                        } else {
-                            tempMax = Math.max(tempMax, bcA.p + bcB.p);
-                        }
-                    }
-                }
-            } else {
-                for (BatteryCharge bcA: board[personA[0]][personA[1]]) {
-                    tempMax = Math.max(tempMax, bcA.p);
-                }
-            }
-        }
-        // A의 위치에 BC 리스트가 없을 때
-        else {
-            if (board[personB[0]][personB[1]] != null) {
-                for (BatteryCharge bcB: board[personB[0]][personB[1]]) {
-                    tempMax = Math.max(tempMax, bcB.p);
-                }
-            } else {
-                tempMax = 0;
-            }
-        }
-        ans += tempMax;
-    }
-
-    static void bfs(BatteryCharge bc){
+    static void init(BatteryCharge bc) {
         Queue<int[]> q = new LinkedList<>();
-        boolean[][] visited = new boolean[11][11];
-
         q.add(new int[] {bc.x, bc.y});
-        visited[bc.x][bc.y] = true;
 
         if (board[bc.x][bc.y] == null) {
             board[bc.x][bc.y] = new ArrayList<>();
@@ -138,28 +100,75 @@ public class 무선_충전 {
                     int nx = x + dx[d];
                     int ny = y + dy[d];
 
-                    if (1 <= nx && nx <= 10 && 1 <= ny && ny <= 10 && !visited[nx][ny]){
-                        if (board[nx][ny] == null) {
-                            board[nx][ny] = new ArrayList<>();
-                        }
-                        board[nx][ny].add(bc);
-                        visited[nx][ny] = true;
-                        q.add(new int[] {nx, ny});
-                    }
+                    if (isNotBoundary(nx, ny)) continue;
+                    if (board[nx][ny] == null) board[nx][ny] = new ArrayList<>();
+                    board[nx][ny].add(bc);
+                    q.add(new int[]{nx, ny});
                 }
             }
 
             coverage++;
-            if (coverage == bc.coverage){
+            if (coverage == bc.coverage) {
                 break;
             }
         }
     }
 
+    static void charge(int[] A, int[] B) {
+        // 두 사람의 배터리를 충전해나간다.
+        int max = Integer.MIN_VALUE;
+        // A 위치에 BC 리스트가 있을 때
+        if (board[A[0]][A[1]] != null) {
+            // B 위치에 BC 리스트가 있을 때
+            if (board[B[0]][B[1]] != null) {
+                for (BatteryCharge bcA: board[A[0]][A[1]]) {
+                    for (BatteryCharge bcB: board[B[0]][B[1]]) {
+                        if (bcA.equals(bcB)) {
+                            max = Math.max(max, bcA.p);
+                        } else {
+                            max = Math.max(max, bcA.p + bcB.p);
+                        }
+                    }
+                }
+            }
+            // B 위치에 BC 리스트가 없을 때 ( A 만 충전 범위일 때 )
+            else {
+                for (BatteryCharge bcA: board[A[0]][A[1]]) {
+                    max = Math.max(max, bcA.p);
+                }
+            }
+        }
+        // A 위치에 BC 리스트가 없을 때
+        else {
+            // B 위치에 BC 리스트가 있을 때
+            if (board[B[0]][B[1]] != null) {
+                for (BatteryCharge bcB: board[B[0]][B[1]]) {
+                    max = Math.max(max, bcB.p);
+                }
+            }
+            // B 위치에 BC 리스트가 없을 때
+            else {
+                max = 0;
+            }
+        }
+        ans += max;
+    }
+
+    static void movePerson(int[] A, int[] B, int idx) {
+        personA[0] += dx[A[idx]];
+        personA[1] += dy[A[idx]];
+        personB[0] += dx[B[idx]];
+        personB[1] += dy[B[idx]];
+    }
+
+    static boolean isNotBoundary(int x, int y) {
+        return !(1 <= x && x <= 10 && 1 <= y && y <= 10);
+    }
+
     static class BatteryCharge {
         int x, y, coverage, p;
 
-        public BatteryCharge(int x, int y, int coverage, int p){
+        public BatteryCharge(int x, int y, int coverage, int p) {
             this.x = x;
             this.y = y;
             this.coverage = coverage;
