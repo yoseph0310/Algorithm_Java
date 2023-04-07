@@ -13,11 +13,11 @@ public class 무선_충전 {
 
     static int M, BC, ans;
 
-    static ArrayList<Solution.BatteryCharge>[][] board;
-    static ArrayList<Solution.BatteryCharge> bcList;
+    static ArrayList<BatteryCharge>[][] board;
+    static ArrayList<BatteryCharge> bcList;
 
-    static Solution.Person personA;
-    static Solution.Person personB;
+    static Person personA;
+    static Person personB;
     static int[] moveA;
     static int[] moveB;
 
@@ -60,11 +60,11 @@ public class 무선_충전 {
                 int c = Integer.parseInt(st.nextToken());
                 int p = Integer.parseInt(st.nextToken());
 
-                bcList.add(new Solution.BatteryCharge(x, y, c, p));
+                bcList.add(new BatteryCharge(x, y, c, p));
             }
 
-            personA = new Solution.Person(1,1);
-            personB = new Solution.Person(10,10);
+            personA = new Person(1,1);
+            personB = new Person(10,10);
 
             solve();
 
@@ -74,7 +74,7 @@ public class 무선_충전 {
 
     static void solve() {
 
-        for (Solution.BatteryCharge bc: bcList) {
+        for (BatteryCharge bc: bcList) {
             init(bc);
         }
 
@@ -86,9 +86,9 @@ public class 무선_충전 {
         }
     }
 
-    static void init(Solution.BatteryCharge bc) {
-        Queue<Solution.Point> q = new LinkedList<>();
-        q.add(new Solution.Point(bc.x, bc.y));
+    static void init(BatteryCharge bc) {
+        Queue<Point> q = new LinkedList<>();
+        q.add(new Point(bc.x, bc.y));
 
         if (board[bc.x][bc.y] == null) {
             board[bc.x][bc.y] = new ArrayList<>();
@@ -101,7 +101,7 @@ public class 무선_충전 {
             int size = q.size();
 
             for (int i = 0; i < size; i++) {
-                Solution.Point cur = q.poll();
+                Point cur = q.poll();
 
                 for (int d = 1; d < 5; d++) {
                     int nx = cur.x + dx[d];
@@ -112,7 +112,7 @@ public class 무선_충전 {
                         board[nx][ny] = new ArrayList<>();
                     }
                     board[nx][ny].add(bc);
-                    q.add(new Solution.Point(nx, ny));
+                    q.add(new Point(nx, ny));
                 }
             }
             coverage++;
@@ -124,15 +124,15 @@ public class 무선_충전 {
 
     }
 
-    static void charge(Solution.Person pA, Solution.Person pB) {
+    static void charge(Person pA, Person pB) {
         int max = Integer.MIN_VALUE;
 
         // A 의 위치에 BC 리스트 있을 때
         if (board[pA.x][pA.y] != null) {
             // B 위치에 BC 리스트 있을 때
             if (board[pB.x][pB.y] != null) {
-                for (Solution.BatteryCharge bcA: board[pA.x][pA.y]) {
-                    for (Solution.BatteryCharge bcB : board[pB.x][pB.y]) {
+                for (BatteryCharge bcA: board[pA.x][pA.y]) {
+                    for (BatteryCharge bcB : board[pB.x][pB.y]) {
                         // 만약 둘이 같으면
                         if (bcA.equals(bcB)) {
                             max = Math.max(max, bcA.p);     // 어차피 총합이므로 나눌 필요 없음
@@ -146,7 +146,7 @@ public class 무선_충전 {
             }
             // 없을 때
             else {
-                for (Solution.BatteryCharge bcA : board[pA.x][pA.y]) {
+                for (BatteryCharge bcA : board[pA.x][pA.y]) {
                     max = Math.max(max, bcA.p);
                 }
             }
@@ -155,7 +155,7 @@ public class 무선_충전 {
         else {
             // B 위치에 BC 리스트 있을 때
             if (board[pB.x][pB.y] != null) {
-                for (Solution.BatteryCharge bcB: board[pB.x][pB.y]) {
+                for (BatteryCharge bcB: board[pB.x][pB.y]) {
                     max = Math.max(max, bcB.p);
                 }
             }
