@@ -99,14 +99,15 @@ public class Dijkstra {
         }
 
     }
-}
+    static class Node {
+        int idx;
+        int cost;
 
-class Node {
-    int idx;
-    int cost;
-
-    public Node(int idx, int cost) {
-        this.idx = idx;
-        this.cost = cost;
+        public Node(int idx, int cost) {
+            this.idx = idx;
+            this.cost = cost;
+        }
     }
 }
+
+
