@@ -15,6 +15,7 @@ public class 타일링_3xn {
             DP[i] = num;
         }
 
+
         answer = DP[n];
 
         return answer;
