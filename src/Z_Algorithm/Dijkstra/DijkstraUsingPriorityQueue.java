@@ -86,7 +86,7 @@ public class DijkstraUsingPriorityQueue {
 
                 if (dist[nextNode.idx] > curNode.cost + nextNode.cost) {
                     dist[nextNode.idx] = curNode.cost + nextNode.cost;
-                    pq.offer(new Node(nextNode.idx, nextNode.cost));
+                    pq.offer(new Node(nextNode.idx, dist[nextNode.idx]));
                 }
             }
 
