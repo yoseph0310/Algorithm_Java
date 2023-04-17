@@ -16,7 +16,6 @@ public class 배달 {
                 board[i][j] = MAX;
             }
         }
-
         // 간선 weight 정보 저장
         for (int i = 0; i < road.length; i++) {
             int a = road[i][0];
