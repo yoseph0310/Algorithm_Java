@@ -120,9 +120,9 @@ public class A_2023_상반기_1번_포탑부수기 {
             int ny = s.y + dy[d];
 
             if (ny >= M) ny = 0;
-            else if (0 > ny) ny = M - 1;
-            else if (nx >= N) nx = 0;
-            else if (0 > nx) nx = N - 1;
+            if (0 > ny) ny = M - 1;
+            if (nx >= N) nx = 0;
+            if (0 > nx) nx = N - 1;
 
             if (board[nx][ny].power != 0 && !board[nx][ny].equals(w)) {
                 attackedList.add(new Point(nx, ny));
@@ -221,9 +221,9 @@ public class A_2023_상반기_1번_포탑부수기 {
 
                     // 경계선 넘으면 반대쪽으로 이동
                     if (ny >= M) ny = 0;
-                    else if (0 > ny) ny = M - 1;
-                    else if (nx >= N) nx = 0;
-                    else if (0 > nx) nx = N - 1;
+                    if (0 > ny) ny = M - 1;
+                    if (nx >= N) nx = 0;
+                    if (0 > nx) nx = N - 1;
 
                     if (!visited[nx][ny] && board[nx][ny].power != 0) {
                         List<Point> nList = new ArrayList<>(cList);
