@@ -16,4 +16,4 @@ public class 멀쩡한_사각형 {
         return gcd(h, w % h);
     }
 }
-}
+
