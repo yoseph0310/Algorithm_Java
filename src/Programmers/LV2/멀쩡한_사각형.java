@@ -3,10 +3,10 @@ package Programmers.LV2;
 public class 멀쩡한_사각형 {
     public long solution(int w, int h) {
         long answer = 1;
-        long width = w;
-        long height = h;
+        long width = (long)w;
+        long height = (long)h;
 
-        answer = (w * h) - (w + h - gcd(w,h));
+        answer = (width * height) - (width + height - gcd(width, height));
 
         return answer;
     }
