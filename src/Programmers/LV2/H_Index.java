@@ -18,7 +18,6 @@ public class H_Index {
         }
 
 
-
         return answer;
     }
 
