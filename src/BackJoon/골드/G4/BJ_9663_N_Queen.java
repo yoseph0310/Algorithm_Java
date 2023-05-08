@@ -16,6 +16,8 @@ public class BJ_9663_N_Queen {
         arr = new int[N];
 
         nQueen(0);
+
+        System.out.println(answer);
     }
 
     static void nQueen(int depth) {
