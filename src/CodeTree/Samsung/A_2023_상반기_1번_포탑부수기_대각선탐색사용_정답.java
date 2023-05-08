@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class A_2023_상반기_1번_포탑부수기_정답 {
+public class A_2023_상반기_1번_포탑부수기_대각선탐색사용_정답 {
 
     static int N, M, K;
     static int[] ans;
