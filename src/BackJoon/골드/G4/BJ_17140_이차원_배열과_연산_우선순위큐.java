@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-public class BJ_17140_이차원_배열과_연산 {
+public class BJ_17140_이차원_배열과_연산_우선순위큐 {
 
     static int R, C, K;
     static int[][] A = new int[101][101];
