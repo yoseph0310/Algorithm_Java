@@ -37,9 +37,11 @@ public class BJ_17140_이차원_배열과_연산_리스트 {
         answer = -1;
 
         for (int t = 0; t <= 100; t++) {
-            if (board[r][c] == k) {
-                answer = t;
-                break;
+            if (r < board.length && c < board[0].length) {
+                if (board[r][c] == k) {
+                    answer = t;
+                    break;
+                }
             }
 
             row = board.length;
