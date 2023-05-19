@@ -9,7 +9,6 @@ public class 교점에_별_만들기 {
     public String[] solution(int[][] line) {
         String[] answer = {};
         HashSet<Point> set = new HashSet<>();
-
         // x = (BF-ED) / (AD-BC)
         // y = (EC-AF) / (AD-BC)
         long x, y;
