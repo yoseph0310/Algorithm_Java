@@ -36,7 +36,6 @@ public class 뉴스_클러스터링_1차 {
 
         // fr ra an nc ce
         // fr re en nc ch
-
         for (String s : A) {
             if (B.remove(s)) {
                 AnB.add(s);
