@@ -36,7 +36,6 @@ public class BJ_14499_주사위굴리기 {
             int d = Integer.parseInt(st.nextToken());
             move(d);
         }
-
     }
     public static void move(int d){
         int nx = x + dx[d-1];
