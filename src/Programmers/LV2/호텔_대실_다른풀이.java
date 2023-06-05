@@ -7,7 +7,6 @@ public class 호텔_대실_다른풀이 {
 
     public int solution(String[][] book_time) {
         int answer = 0;
-
         int[] rooms = new int[MAX_TIME];
 
         for (String[] time : book_time) {
