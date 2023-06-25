@@ -92,6 +92,7 @@ public class BJ_20057_마법사_상어와_토네이도 {
             for (int i = 0; i < 4; i++) {
                 dc[i] += 2;
             }
+
         }
     }
 
