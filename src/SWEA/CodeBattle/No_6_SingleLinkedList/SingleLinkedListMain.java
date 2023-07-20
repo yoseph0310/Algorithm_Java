@@ -14,7 +14,7 @@ public class SingleLinkedListMain {
     private final static int PRINT = 5;
     private final static int END = 99;
 
-    private final static UserSolution usersolution = new UserSolution();
+    private final static SingleLinkedList usersolution = new SingleLinkedList();
 
     private static BufferedReader br;
 
