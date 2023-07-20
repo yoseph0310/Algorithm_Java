@@ -7,7 +7,7 @@ Algorithm_Java.iml
 #  BOJ test Class
 Main.java
 
-# Programmers test Class
+# SWEA Programmers test Class
 Solution.java
 
 # DataStructure teest Class
@@ -16,7 +16,7 @@ practice.java
 # out
 out
 
-#UserSolution.java
+#UserSolution
 UserSolution.java
 
 #.classpath & .project
