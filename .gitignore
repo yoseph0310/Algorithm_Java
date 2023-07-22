@@ -5,7 +5,7 @@
 Algorithm_Java.iml
 
 #  BOJ test Class
-Main.java
+src/Main.java
 
 # SWEA Programmers test Class
 src/Solution.java
