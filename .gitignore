@@ -8,7 +8,7 @@ Algorithm_Java.iml
 Main.java
 
 # SWEA Programmers test Class
-Solution.java
+src/Solution.java
 
 # DataStructure teest Class
 practice.java
@@ -17,7 +17,7 @@ practice.java
 out
 
 #UserSolution
-UserSolution.java
+src/UserSolution.java
 
 #.classpath & .project
 .classpath
