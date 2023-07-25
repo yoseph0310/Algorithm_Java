@@ -104,6 +104,7 @@ public class LCA {
         return parent[node1][0];
     }
 
+    // DFS 를 통해 각 노드의 부모와 깊이 정보를 얻는다.
     static void dfs(int current, int depth) {
         visit[current] = true;
         deep[current] = depth;
@@ -116,6 +117,7 @@ public class LCA {
         }
     }
 
+    // 희소 테이블에 정보들을 연결한다.
     static void connect() {
         for (int p = 1; p < 21; p++) {
             for (int cur = 0; cur < N; cur++) {
