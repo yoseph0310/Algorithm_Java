@@ -39,7 +39,7 @@ public class No_17_영준이의_진짜_BFS {
             }
 
 
-            BFS(1, 0);
+            BFS(1);
             setParent();
 
             int size = searchList.size();
@@ -88,7 +88,7 @@ public class No_17_영준이의_진짜_BFS {
     // BFS 를 통해 정보를 얻는다. (DFS 로도 가능)
     // 1번 노드부터 BFS 를 통해서 각 노드의 자식 노들을 순회하면서
     // 각 노드들의 부모 정보와 깊이를 저장한다.
-    static void BFS(int vertex, int depth) {
+    static void BFS(int vertex) {
         Queue<Integer> q = new LinkedList<>();
         boolean[] visited = new boolean[N + 1];
 
