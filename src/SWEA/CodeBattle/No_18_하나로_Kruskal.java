@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
     인덱스로 정점을 구분해야함
     간선의 가중치(weight) - E * (dist ^ 2)
  */
-public class No_18_하나로 {
+public class No_18_하나로_Kruskal {
 
     static int N;
     static double E;
