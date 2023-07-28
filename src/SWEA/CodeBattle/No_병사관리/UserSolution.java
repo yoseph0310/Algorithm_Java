@@ -1,23 +1,27 @@
 package SWEA.CodeBattle.No_병사관리;
 
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Collections;
+public class UserSolution {
+    final static int TEAM_MAX = 5;
+    final static int SCORE_MAX = 5;
+    final static int SOLDIER_MAX = 100000;
 
-public class UserSolution  {
-
-    final int MAX_TEAM_LEN = 5;
-
-    HashMap<Integer, Soldier> soldierInfo;
-    ArrayList<Soldier>[] teamList;
+    Team[] teams;
+    int[] soldiers;
+    int[] version;
 
     public void init() {
+        teams = new Team[TEAM_MAX + 1];
+        soldiers = new int[SOLDIER_MAX + 1];
+        version = new int[SOLDIER_MAX + 1];
 
-        soldierInfo = new HashMap<>();      // mID 를 key 로 하는 Soldier 실제 객체 저장하는 Map
-        teamList = new ArrayList[MAX_TEAM_LEN + 1];    // team 으로 조회하기 위한 List
+        for (int i = 1; i <= TEAM_MAX; i++) {
+            teams[i] = new Team();
+            for (int j = 1; j <= SCORE_MAX; j++) {
+                Soldier soldier = Soldier.getSoldier(0, -1);
 
-        for (int i = 1; i <= MAX_TEAM_LEN; i++) {
-            teamList[i] = new ArrayList<>();
+                teams[i].scoreHead[j] = soldier;
+                teams[i].scoreTail[j] = soldier;
+            }
         }
     }
 
@@ -29,14 +33,15 @@ public class UserSolution  {
      * @param mScore    : 평판 점수 (1 <= mScore <= 5)
      */
     public void hire(int mID, int mTeam, int mScore) {
-//        System.out.println("hire() : " + mID + " 번 병사를 " + mTeam + " 에 고용합니다. 점수는 " + mScore + " 입니다.");
+        Soldier soldier = Soldier.getSoldier(mID, 0);
 
-        Soldier soldier = new Soldier(mID, mTeam, mScore);
+        // mTeam 팀의 mScore 점인 링크드리스트 tail 다음으로 새로 고용한 병사를 넣고
+        // 새로운 tail 로 지정
+        teams[mTeam].scoreTail[mScore].next = soldier;
+        teams[mTeam].scoreTail[mScore] = soldier;
 
-        soldierInfo.put(mID, soldier);
-        teamList[mTeam].add(soldier);
-
-//        print_mTeam(mTeam);
+        // mID 의 병사가 mTeam 인지를 기록
+        soldiers[mID] = mTeam;
     }
 
     /**
@@ -45,14 +50,8 @@ public class UserSolution  {
      * @param mID       : 고유 번호 (1 <= mID <= 100,000)
      */
     public void fire(int mID) {
-//        System.out.println("fire() : " + mID + " 번 병사를 해고합니다.");
-
-        // mID 병사가 있음이 보장되므로 contains 는 굳이 사용 안함.
-        Soldier soldier = soldierInfo.get(mID);
-
-        soldierInfo.remove(soldier.mID);
-        teamList[soldier.mTeam].remove(soldier);
-//        print_mTeam(soldier.mTeam);
+        // mID 번의 병사를 -1 로 해고 당한 상태임을 기록
+        version[mID] = -1;
     }
 
     /**
@@ -63,13 +62,11 @@ public class UserSolution  {
      * @param mScore    : 평판 점수 (1 <= mScore <= 5)
      */
     public void updateSoldier(int mID, int mScore) {
-//        System.out.println("updateSoldier() : " + mID + " 번 병사의 점수를 " + mScore + " 로 변경합니다.");
+        Soldier soldier = Soldier.getSoldier(mID, ++version[mID]);
 
-        // mID 병사가 있음이 보장되므로 contains 는 굳이 사용 안함.
-        Soldier soldier = soldierInfo.get(mID);
-//        System.out.println("  변경 전 : " + soldier.mScore);
-        soldier.mScore = mScore;
-//        System.out.println("  변경 후 : " + soldier.mScore);
+        // hire() 와 마찬가지로 tail 에 등록
+        teams[soldiers[mID]].scoreTail[mScore].next = soldier;
+        teams[soldiers[mID]].scoreTail[mScore] = soldier;
     }
 
     /**
@@ -82,19 +79,40 @@ public class UserSolution  {
      * @param mChangeScore    : 평판 점수의 변화량 (-4 <= mChangeScore <= 4)
      */
     public void updateTeam(int mTeam, int mChangeScore) {
-//        System.out.println("updateTeam() : " + mTeam + " 의 모든 병사들의 점수를 조건에 맞게 각각 변경합니다.");
+        if (mChangeScore == 0) return;
+        if (mChangeScore < 0) {
+            for (int i = 1; i <= SCORE_MAX; i++) {
+                int tmpScore = i + mChangeScore;
+                tmpScore = tmpScore < 1 ? 1 : tmpScore;
 
-//        print_mTeam(mTeam);
-        ArrayList<Soldier> tmp = teamList[mTeam];
+                // 변경될 스코어가 i 와 같으면 그대로 이므로 continue
+                if (i == tmpScore) continue;
+                if (teams[mTeam].scoreHead[i].next == null) continue;
 
-        for (int i = 0; i < tmp.size(); i++) {
-            Soldier s = tmp.get(i);
+                // i 번의 head 를 변경된 점수인 tmpScore tail 의 next 로 두면 모두 옮겨진다.
+                // 그 다음 tmpScore 의 새로운 tail 로 옮긴 i 번의 head 로 설정한다.
+                teams[mTeam].scoreTail[tmpScore].next = teams[mTeam].scoreHead[i].next;
+                teams[mTeam].scoreTail[tmpScore] = teams[mTeam].scoreTail[i];
 
-            if ((s.mScore + mChangeScore) > 5) s.mScore = 5;
-            else s.mScore = Math.max((s.mScore + mChangeScore), 1);
+                teams[mTeam].scoreHead[i].next = null;
+                teams[mTeam].scoreTail[i] = teams[mTeam].scoreHead[i];
+            }
+
+        } else {
+            for (int i = SCORE_MAX; i >= 1; i--) {
+                int tmpScore = i + mChangeScore;
+                tmpScore = tmpScore > 5 ? 5 : tmpScore;
+
+                if (i == tmpScore) continue;
+                if (teams[mTeam].scoreHead[i].next == null) continue;
+
+                teams[mTeam].scoreTail[tmpScore].next = teams[mTeam].scoreHead[i].next;
+                teams[mTeam].scoreTail[tmpScore] = teams[mTeam].scoreTail[i];
+
+                teams[mTeam].scoreHead[i].next = null;
+                teams[mTeam].scoreTail[i] = teams[mTeam].scoreHead[i];
+            }
         }
-//        System.out.println("  팀 점수 변경 후");
-//        print_mTeam(mTeam);
     }
 
     /**
@@ -106,30 +124,41 @@ public class UserSolution  {
      * @return          : 점수가 가장 높은 병사 mID 반환
      */
     public int bestSoldier(int mTeam) {
-        // 여기 때문에 PriorityQueue vs ArrayList 가 고민됨 - 일단 ArrayList 먼저 선택
-//        System.out.println("bestSoldier() : " + mTeam + " 번 팀에서 가장 뛰어난 병사를 반환합니다.");
+        int maxScoreSoldier = -1;
 
-        Collections.sort(teamList[mTeam]);
+        for (int i = SCORE_MAX; i >= 1; i--) {
+            Soldier firstSoldier = teams[mTeam].scoreHead[i].next;
+            if (firstSoldier == null) continue;
 
-//        System.out.println("  점수가 가장 높은 병사 : " + teamList[mTeam].get(0).mID);
+            for (Soldier s = firstSoldier; s != null; s = s.next) {
+                if (s.version != version[s.mID]) continue;
 
-        return teamList[mTeam].get(0).mID;
+                maxScoreSoldier = Math.max(maxScoreSoldier, s.mID);
+            }
+
+            if (maxScoreSoldier != -1) return maxScoreSoldier;
+        }
+
+        return maxScoreSoldier;
     }
 
-    static class Soldier implements Comparable<Soldier>{
-        int mID, mTeam, mScore;
+    static class Team {
+        Soldier[] scoreHead = new Soldier[SCORE_MAX + 1];
+        Soldier[] scoreTail = new Soldier[SCORE_MAX + 1];
+    }
 
-        public Soldier(int mID, int mTeam, int mScore) {
+    static class Soldier {
+        int mID, version;
+        Soldier next;
+
+        public Soldier(int mID, int version) {
             this.mID = mID;
-            this.mTeam = mTeam;
-            this.mScore = mScore;
+            this.version = version;
+            this.next = null;
         }
 
-        @Override
-        public int compareTo(Soldier s) {
-            if (s.mScore == mScore) return s.mID - mID;
-            else return s.mScore - mScore;
+        public static Soldier getSoldier(int mID, int version) {
+            return new Soldier(mID, version);
         }
     }
-
 }

@@ -122,7 +122,18 @@ public class Solution {
             Instant afterTime = Instant.now();
             long diffTime = Duration.between(beforeTime, afterTime).toMillis();
 
-            if (diffTime > 3000) {
+            // 3s 넘으면 호출 횟수 실행시간 확인
+//            if (diffTime > 3000) {
+//                System.out.println("  CMD_HIRE_CNT 호출 횟수 : " + CMD_HIRE_CNT);
+//                System.out.println("  CMD_FIRE_CNT 호출 횟수 : " + CMD_FIRE_CNT);
+//                System.out.println("  CMD_UPDATE_SOLDIER_CNT 호출 횟수 : " + CMD_UPDATE_SOLDIER_CNT);
+//                System.out.println("  CMD_UPDATE_TEAM_CNT 횟수 : " + CMD_UPDATE_TEAM_CNT);
+//                System.out.println("  CMD_BEST_SOLDIER_CNT 호출 횟수 : " + CMD_BEST_SOLDIER_CNT);
+//                System.out.println("  실행 시간 (ms) : " + diffTime);
+//            }
+
+            // 15 MAX_TEST CASE && 20 TIME OUT CASE
+            if (testcase == 15 || testcase == 20) {
                 System.out.println("  CMD_HIRE_CNT 호출 횟수 : " + CMD_HIRE_CNT);
                 System.out.println("  CMD_FIRE_CNT 호출 횟수 : " + CMD_FIRE_CNT);
                 System.out.println("  CMD_UPDATE_SOLDIER_CNT 호출 횟수 : " + CMD_UPDATE_SOLDIER_CNT);
