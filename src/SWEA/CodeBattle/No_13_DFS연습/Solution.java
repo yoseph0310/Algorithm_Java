@@ -30,7 +30,6 @@ public class Solution {
 
         boolean[] check = new boolean[MAX_K+2];
 
-        // 최댓값을 저장하기 위해 -1 로 초기화 (Heap)
         for(int i = 1; i < MAX_K + 2; i++) {
             p[i] = c[i] = -1;
         }
@@ -80,9 +79,9 @@ public class Solution {
             str = br.readLine();
             st = new StringTokenizer(str, " ");
 
-            N = Integer.parseInt(st.nextToken());           // 노드 수
-            Q = Integer.parseInt(st.nextToken());           // 간선의 수
-            seed = Long.parseLong(st.nextToken());          // (????)
+            N = Integer.parseInt(st.nextToken());
+            Q = Integer.parseInt(st.nextToken());
+            seed = Long.parseLong(st.nextToken());
 
             makeTree(N-1);
             usersolution.dfs_init(N, path);
@@ -92,8 +91,8 @@ public class Solution {
                 str = br.readLine();
                 st = new StringTokenizer(str, " ");
 
-                K = Integer.parseInt(st.nextToken());       // 왕위 계승을 진행할 K 왕
-                ans = Integer.parseInt(st.nextToken());     // 왕위 계승 대상자인 자식
+                K = Integer.parseInt(st.nextToken());
+                ans = Integer.parseInt(st.nextToken());
 
                 ret = usersolution.dfs(K);
 
