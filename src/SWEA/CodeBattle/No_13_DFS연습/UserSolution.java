@@ -38,14 +38,14 @@ public class UserSolution {
             for (int i = 0; i < childList.size(); i++) {
                 Node c = childList.get(i);
 
-                res = DFS(parent, c.num);
+                res = dfs(parent, c.num);
                 if (res != -1) break;
             }
         }
         return res;
     }
 
-    private int DFS(int root, int child) {
+    private int dfs(int root, int child) {
         if (root < child) {
             return child;
         }
@@ -58,7 +58,7 @@ public class UserSolution {
             for (int i = 0; i < tree[child].childList.size(); i++) {
                 Node c = tree[child].childList.get(i);
 
-                res = DFS(root, c.num);
+                res = dfs(root, c.num);
                 if (res != -1) break;
             }
         }
