@@ -22,7 +22,6 @@ public class UserSolution {
             Node child = tree[path[i][1]];
 
             parent.childList.add(child);
-            child.parent = parent;
         }
 
     }
@@ -69,12 +68,10 @@ public class UserSolution {
 
     static class Node {
         int num;
-        Node parent;
         ArrayList childList;
 
         public Node(int num) {
             this.num = num;
-            this.parent = null;
             this.childList = new ArrayList();
         }
     }
