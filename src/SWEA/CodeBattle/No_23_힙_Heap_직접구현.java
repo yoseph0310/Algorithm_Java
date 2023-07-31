@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
 
     연산 2의 결과를 공백을 두고 출력한다.
  */
-public class No_23_힙 {
+public class No_23_힙_Heap_직접구현 {
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
