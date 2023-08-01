@@ -1,4 +1,4 @@
-package SWEA.CodeBattle;
+package SWEA.CodeBattle.No_24_보급로;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
