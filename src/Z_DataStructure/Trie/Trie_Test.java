@@ -8,46 +8,92 @@ public class Trie_Test {
 
         Trie trie = new Trie();
 
-        trie.insert("kakao");
-        trie.insert("busy");
-        trie.insert("card");
-        trie.insert("cap");
+        trie.insert("PI");
+        trie.insert("PIE");
 
-        System.out.println(trie.search("kakao"));
-        System.out.println(trie.search("bus"));
-        System.out.println(trie.search("busy"));
+        System.out.println(trie.contains("APP"));
 
     }
 
     static class Node {
-        Map<Character, Node> childNode = new HashMap<>();
-        boolean endOfWord;
+        private Map<Character, Node> childNodes = new HashMap<>();
+        private boolean isLastChar;
+
+        Map<Character, Node> getChildNodes() {
+            return this.childNodes;
+        }
+
+        boolean isLastChar() {
+            return this.isLastChar;
+        }
+
+        void setIsLastChar(boolean isLastChar) {
+            this.isLastChar = isLastChar;
+        }
     }
 
     static class Trie {
-        Node rootNode = new Node();
+        Node rootNode;
 
-        void insert(String str) {
-            Node node = this.rootNode;
-
-            for (int i = 0; i < str.length(); i++) {
-                node = node.childNode.computeIfAbsent(str.charAt(i), key -> new Node());
-            }
-
-            node.endOfWord = true;
+        public Trie() {
+            rootNode = new Node();
         }
 
-        boolean search(String str) {
-            Node node = this.rootNode;
+        void insert(String word) {
+            Node thisNode = this.rootNode;
 
-            for (int i = 0; i < str.length(); i++) {
-                node = node.childNode.getOrDefault(str.charAt(i), null);
-                if (node == null) {
-                    return false;
-                }
+            for (int i = 0; i < word.length(); i++) {
+                thisNode = thisNode.childNodes.computeIfAbsent(word.charAt(i), c -> new Node());
+            }
+            thisNode.setIsLastChar(true);
+        }
+
+        boolean contains(String word) {
+            Node thisNode = this.rootNode;
+
+            for (int i = 0; i < word.length(); i++) {
+                char character = word.charAt(i);
+                Node node = thisNode.getChildNodes().get(character);
+
+                if (node == null) return false;
+
+                thisNode = node;
             }
 
-            return node.endOfWord;
+            return thisNode.isLastChar();
+        }
+
+        void delete(String word) {
+            delete(this.rootNode, word, 0);
+        }
+
+        private void delete(Node thisNode, String word, int idx) {
+            char character = word.charAt(idx);
+
+            if (!thisNode.getChildNodes().containsKey(character)) {
+                throw new Error("There is no [" + word + "] in this Trie");
+            }
+
+            Node childNode = thisNode.getChildNodes().get(character);
+            idx++;
+
+            if (idx == word.length()) {
+                if (!childNode.isLastChar()) throw new Error("There is no [" + word + "] in this Trie");
+
+                childNode.setIsLastChar(false);
+
+                if (childNode.getChildNodes().isEmpty()) thisNode.getChildNodes().remove(character);
+                else {
+                    delete(childNode, word, idx);
+                    if (!childNode.isLastChar() && childNode.getChildNodes().isEmpty()) {
+                        thisNode.getChildNodes().remove(character);
+                    }
+                }
+            }
+        }
+
+        boolean isRootEmpty() {
+            return this.rootNode.getChildNodes().isEmpty();
         }
     }
 }
