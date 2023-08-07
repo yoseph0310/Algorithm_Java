@@ -22,7 +22,8 @@ public class Solution
         }
     }
 
-    private static UserSolution usersolution = new UserSolution();
+//    private static UserSolution usersolution = new UserSolution();
+    private static UserSolution_2 usersolution = new UserSolution_2();
 
     private static boolean run(BufferedReader br) throws Exception
     {
