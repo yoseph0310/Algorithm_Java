@@ -78,7 +78,7 @@ public class Solution
 
     public static void main(String[] args) throws Exception
     {
-         System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Downloads/sample_input_elec_t.txt"));
+         System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Downloads/sample_input_elec.txt"));
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
