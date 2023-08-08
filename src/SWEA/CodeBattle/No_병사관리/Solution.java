@@ -100,7 +100,7 @@ public class Solution {
     {
         int TC, MARK;
 
-        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Downloads/sample_25_input.txt"));
+        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/13072_병사관리_input_output/sample_25_input.txt"));
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");

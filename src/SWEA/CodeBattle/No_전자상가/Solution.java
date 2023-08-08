@@ -79,7 +79,7 @@ public class Solution
 
     public static void main(String[] args) throws Exception
     {
-         System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Downloads/sample_input_elec.txt"));
+         System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/18165_전자상가_input_output/sample_input_elec.txt"));
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
