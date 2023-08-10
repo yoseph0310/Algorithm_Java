@@ -8,6 +8,7 @@ public class Solution {
     private final static int CMD_MIN_TRAVEL_TIME = 3;
     private final static int CMD_MIN_PRICE = 4;
 
+//    private final static UserSolution_Coach usersolution = new UserSolution_Coach();
     private final static UserSolution usersolution = new UserSolution();
 
     private static boolean run(Scanner sc)
@@ -81,11 +82,15 @@ public class Solution {
         T = sc.nextInt();
         MARK = sc.nextInt();
 
+        long start = System.currentTimeMillis();
         for (int tc = 1; tc <= T; tc++)
         {
             int score = run(sc) ? MARK : 0;
             System.out.println("#" + tc + " " + score);
         }
+        long end = System.currentTimeMillis();
+        long diff = end - start;
+        System.out.println("총 실행 시간 : " + diff + " (ms)");
 
         sc.close();
     }
