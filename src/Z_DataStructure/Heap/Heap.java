@@ -251,7 +251,6 @@ public class Heap<E> {
     public int size() {
         return size;
     }
-
     @SuppressWarnings("unchecked")
     public E peek() {
         if (array[1] == null) {
