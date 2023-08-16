@@ -16,9 +16,6 @@ class UserSolution {
 
     static HashMap<String, Integer> branchHM;
 
-    static char[] charPool;
-    static int charPoolLastIdx;
-
     static Branch[] branchPool;
     static int branchPoolLastIdx;
 
@@ -102,7 +99,6 @@ class UserSolution {
             branchPool[i] = new Branch();
         }
         branchPoolLastIdx = 0;
-        charPoolLastIdx = 0;
 
         createBranch("root", null);
 
