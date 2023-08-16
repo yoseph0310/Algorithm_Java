@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  *  mTime 은 init() 을 제외하고 매 함수 호출 시 마다 1씩 증가한다.
  */
-class UserSolution {
+class UserSolution_Test_Print {
 
     static final int MAX_CHAR_SIZE = 11;
     static final int MAX_API_CALL = 10_000;
@@ -128,8 +128,28 @@ class UserSolution {
         String str_mFile = charToString(mFile);
         String str_mData = charToString(mData);
 
+//        System.out.println("100. create(" + mTime + ", " + str_mBranch + ", " + str_mFile + ", " + str_mData + ")");
+
         int idx = branchHM.get(str_mBranch);
+//        System.out.println("  생성하기 전 파일리스트 상태");
+//        System.out.println("    name : " + str_mBranch);
+//        for (int i = 0; i < branchPool[idx].fileList.length; i++) {
+//            if (branchPool[idx].fileList[(branchPool[idx].front + i) % MAX_FILES_SIZE].name != null) {
+//                System.out.println("      file name : " + branchPool[idx].fileList[(branchPool[idx].front + i) % MAX_FILES_SIZE].name);
+//            }
+//        }
         branchPool[idx].addLast(new File(mTime, mTime, str_mFile, str_mData));
+
+//        System.out.println();
+//        System.out.println("  생성한 이후 파일리스트 상태");
+//        System.out.println("    name : " + str_mBranch);
+//        for (int i = 0; i < branchPool[idx].fileList.length; i++) {
+//            if (branchPool[idx].fileList[(branchPool[idx].front + i) % MAX_FILES_SIZE].name != null) {
+//                System.out.println("      file (name : " + branchPool[idx].fileList[(branchPool[idx].front + i) % MAX_FILES_SIZE].name + ")," +
+//                        " (data : " + branchPool[idx].fileList[(branchPool[idx].front + i) % MAX_FILES_SIZE].data+")");
+//            }
+//        }
+
     }
 
     /**
@@ -149,18 +169,41 @@ class UserSolution {
         String str_mFile = charToString(mFile);
         String str_mData = charToString(mData);
 
+//        System.out.println("200. edit(" + mTime + ", " + str_mBranch + ", " + str_mFile + ", " + str_mData + ")");
+
         int idx = branchHM.get(str_mBranch);
         Branch branch = branchPool[idx];
         File file = findFile(branch, str_mFile);
 
+//        System.out.println("  찾은 파일의 수정 전 내용");
+//        System.out.println("    file name : " + file.name);
+//        System.out.println("    file data : " + file.data);
+
         file.data = str_mData;
         file.editedTime = mTime;
+
+//        System.out.println("  찾은 파일의 수정 후 내용");
+//        System.out.println("    file name : " + file.name);
+//        System.out.println("    file data : " + file.data);
+//
+//        System.out.println("  실제 브랜치 풀의 정보에 반영됐는지 확인");
+//        Branch b = branchPool[0];
+//        for (int i = 0; i < b.fileList.length; i++) {
+//            if (b.fileList[i].name.equals(file.name)) {
+//                System.out.println("    file name : " + b.fileList[i].name);
+//                System.out.println("    file data : " + b.fileList[i].data);
+//                break;
+//            }
+//        }
+
     }
 
     // branch 에서 fileName 과 같은 파일을 찾는다.
     File findFile(Branch branch, String fileName) {
         for (int i = 0; i < branch.fileList.length; i++) {
+//            System.out.println("  " + branch.fileList[(branch.front + i) % MAX_FILES_SIZE].name);
             File file = branch.fileList[(branch.front + i) % MAX_FILES_SIZE];
+
             if (file.name.equals(fileName)) {
                 return file;
             }
@@ -186,14 +229,20 @@ class UserSolution {
         String str_mBranch = charToString(mBranch);
         String str_mChild = charToString(mChild);
 
+//        System.out.println("300. branch("+ mTime + ", " +str_mBranch + ", " + str_mChild + ")");
+
         // 부모 브랜치 인덱스
         int parentIdx = branchHM.get(str_mBranch);
+//        System.out.println("  부모 브랜치 정보");
+//        System.out.println("    name : " + branchPool[parentIdx].name);
 
         // mBranch 를 부모로 하는 child 브랜치 생성
         createBranch(str_mChild, branchPool[parentIdx]);
 
         // 새로 생성된 자식 브랜치 인덱스
         int childIdx = branchHM.get(str_mChild);
+//        System.out.println("  새로 생성된 자식 브랜치 정보");
+//        System.out.println("    name : " + branchPool[childIdx].name);
 
         // 부모 브랜치의 자식 브랜치 목록에 생성된 브랜치를 추가.
         branchPool[parentIdx].childBranchQ.add(branchPool[childIdx]);
@@ -206,6 +255,7 @@ class UserSolution {
             if (branchPool[parentIdx].fileList[idx].name != null) {
                 File file = branchPool[parentIdx].fileList[idx];
                 File cFile = branchPool[childIdx].addLast(new File(file.createdTime, file.editedTime, file.name, file.data));
+//                System.out.println("      file name : " + branchPool[parentIdx].fileList[idx].name);
             }
         }
     }
@@ -221,6 +271,8 @@ class UserSolution {
     void merge(int mTime, char[] mBranch) {
         String str_mBranch = charToString(mBranch);
 
+//        System.out.println("400. merge(" + mTime + ", " + str_mBranch + ")");
+//        printCharArr(mBranch);
         // mBranch 의 부모 브랜치로 병합한다.
         int idx = branchHM.get(str_mBranch);
         merge(branchPool[idx]);
@@ -228,6 +280,7 @@ class UserSolution {
 
     void merge(Branch branch) {
         Branch parent = branch.parentBranch;
+//        System.out.println("  병합할 " + branch.name + " 의 부모 브랜치 : " + parent.name);
 
         // 만약 병합하려는 브랜치가 자식 브랜치가 있다면 먼저 자기 자식 브랜치들 부터 병합한다.
         while (!branch.childBranchQ.isEmpty()) {
@@ -300,9 +353,12 @@ class UserSolution {
      * @return          : 읽은 파일 내용을 retString 에 담고 그 길이를 반환한다.
      */
     int readfile(int mTime, char[] mBranch, char[] mFile, char[] retString) {
+//        Arrays.fill(retString, '\0');
         String str_mBranch = charToString(mBranch);
         String str_mFile = charToString(mFile);
         String str_retString = charToString(retString);
+
+//        System.out.println("500. readfile(" + mTime + ", " + str_mBranch + ", " + str_mFile + ", " + str_retString + ")");
 
         int idx = branchHM.get(str_mBranch);
         File file = findFile(branchPool[idx], str_mFile);
@@ -311,6 +367,11 @@ class UserSolution {
         for (int i = 0; i < file.data.length(); i++) {
             retString[i] = file.data.charAt(i);
         }
+
+//        for (int i = 0; i < retString.length; i++) {
+//            System.out.print(retString[i]);
+//        }
+//        System.out.println();
 
         return file.data.length();
     }
@@ -324,5 +385,12 @@ class UserSolution {
         }
 
         return sb.toString();
+    }
+
+    static void printCharArr(char[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i]);
+        }
+        System.out.println();
     }
 }
