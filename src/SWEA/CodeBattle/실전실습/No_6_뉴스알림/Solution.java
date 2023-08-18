@@ -6,7 +6,8 @@ import java.util.StringTokenizer;
 
 class Solution {
     private static BufferedReader br;
-    private static UserSolution usersolution = new UserSolution();
+//    private static UserSolution usersolution = new UserSolution();
+    private static UserSolution_Practice usersolution = new UserSolution_Practice();
 
     private final static int INIT = 0;
     private final static int REGI = 1;
