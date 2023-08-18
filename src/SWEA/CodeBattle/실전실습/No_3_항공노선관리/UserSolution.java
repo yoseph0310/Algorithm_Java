@@ -175,7 +175,7 @@ public class UserSolution {
                 return price;
             }
 
-            for (int i = 0; i < graphPrice[mStartAirport].length; i++) {
+            for (int i = 0; i < graphPrice[idx].length; i++) {
                 if (graphPrice[idx][i] == INF) continue;
 
                 int nextPrice = price + graphPrice[idx][i];

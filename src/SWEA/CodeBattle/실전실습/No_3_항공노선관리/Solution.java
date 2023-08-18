@@ -10,6 +10,7 @@ public class Solution {
 
 //    private final static UserSolution_Coach usersolution = new UserSolution_Coach();
     private final static UserSolution usersolution = new UserSolution();
+//    private final static UserSolution_Practice usersolution = new UserSolution_Practice();
 
     private static boolean run(Scanner sc)
     {
