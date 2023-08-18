@@ -7,7 +7,8 @@ import java.util.StringTokenizer;
 class Solution {
     private static BufferedReader br;
 //    private static UserSolution_Test usersolution = new UserSolution_Test();
-    private static UserSolution usersolution = new UserSolution();
+//    private static UserSolution usersolution = new UserSolution();
+    private static UserSolution_Practice usersolution = new UserSolution_Practice();
 
     private final static int CMD_INIT = 100;
     private final static int CMD_DROP = 200;
