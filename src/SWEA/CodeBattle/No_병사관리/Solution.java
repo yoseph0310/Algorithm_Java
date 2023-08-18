@@ -13,7 +13,8 @@ public class Solution {
     private final static int CMD_UPDATE_TEAM		= 5;
     private final static int CMD_BEST_SOLDIER		= 6;
 
-    private final static UserSolution usersolution = new UserSolution();
+    private final static UserSolution_Practice usersolution = new UserSolution_Practice();
+//    private final static UserSolution usersolution = new UserSolution();
 
     static int CMD_HIRE_CNT;
     static int CMD_FIRE_CNT;
@@ -100,6 +101,7 @@ public class Solution {
     {
         int TC, MARK;
 
+//        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/13072_병사관리_input_output/sample_25_input_one.txt"));
         System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/13072_병사관리_input_output/sample_25_input.txt"));
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
