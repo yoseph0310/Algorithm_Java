@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 class UserSolution {
 
-    static final int MAX_PARENT_LENGTH = 14;        // add 호출 횟수 12.000 -> 2^14 (약 12,000)
+    static final int MAX_PARENT_LENGTH = 14;        // add 호출 횟수 12,000 -> 2^14 (약 12,000)
     static final int MAX_DAY = 1_048_576;           // mDay 범위 1,000,000. 가장 근접한 2의 제곱수 -> 2 ^ 20 (약 1,048,576)
 
     static class Node {
@@ -30,7 +30,7 @@ class UserSolution {
     int[] segTree;
 
     void segTreeAdd(int node, int left, int right, int start, int end) {
-        if (right < start || end < left) return;
+        if (end < left || right < start) return;
         if (start <= left && right <= end) {
             segTree[node] += 1;
             return;
