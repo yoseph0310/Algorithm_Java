@@ -21,7 +21,8 @@ class Solution
             b[i] = '\0';
     }
 
-    private static UserSolution usersolution = new UserSolution();
+    private static UserSolution_Practice usersolution = new UserSolution_Practice();
+//    private static UserSolution usersolution = new UserSolution();
 
     private static boolean run(BufferedReader br) throws Exception
     {
