@@ -10,7 +10,8 @@ class Solution {
     private final static int CMD_REMOVE = 3;
     private final static int CMD_ANNOUNCE = 4;
 
-    private final static UserSolution usersolution = new UserSolution();
+    private final static UserSolution_Practice usersolution = new UserSolution_Practice();
+//    private final static UserSolution usersolution = new UserSolution();
 
     private static boolean run(BufferedReader br) throws Exception {
         int q = Integer.parseInt(br.readLine());
