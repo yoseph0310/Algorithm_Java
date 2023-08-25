@@ -99,7 +99,7 @@ public class UserSolution_Practice {
         for (int i = MAX_DEPTH - 1; i >= 0; i--) {
             if (node1.parents[i].name == null && node2.parents[i].name == null) continue;
 
-            if (!node1.parents[i].name.equals(node2.parents[i].name)) {
+            if (node1.parents[i] != node2.parents[i]) {
                 dist += pow[i] * 2;
                 node1 = node1.parents[i];
                 node2 = node2.parents[i];
