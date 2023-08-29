@@ -73,7 +73,7 @@ public class Solution {
     public static void main(String[] args) throws Exception {
         int TC, MARK;
 
-        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/14616_가게관리_input_output/sample_input.txt"));
+        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/실전문제/14616_가게관리_input_output/sample_input.txt"));
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");

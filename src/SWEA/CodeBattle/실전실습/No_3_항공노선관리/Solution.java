@@ -75,8 +75,8 @@ public class Solution {
     {
         int T, MARK;
 
-//        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/15965_항공노선관리_input_output/sample_input_one.txt"));
-        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/15965_항공노선관리_input_output/sample_input.txt"));
+//        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/실전문제/15965_항공노선관리_input_output/sample_input_one.txt"));
+        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/실전문제/15965_항공노선관리_input_output/sample_input.txt"));
 
         Scanner sc = new Scanner(System.in);
 

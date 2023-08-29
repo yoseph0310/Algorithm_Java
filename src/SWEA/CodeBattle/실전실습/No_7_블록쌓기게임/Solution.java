@@ -61,8 +61,8 @@ class Solution {
         int T, MARK;
 
         // System.setIn(new java.io.FileInputStream("res/sample_input.txt"));
-//        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/17696_블록쌓기게임_input_output/sample_input_one.txt"));
-        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/17696_블록쌓기게임_input_output/sample_input.txt"));
+//        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/실전문제/17696_블록쌓기게임_input_output/sample_input_one.txt"));
+        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/실전문제/17696_블록쌓기게임_input_output/sample_input.txt"));
         br = new BufferedReader(new InputStreamReader(System.in));
 
         StringTokenizer stinit = new StringTokenizer(br.readLine(), " ");

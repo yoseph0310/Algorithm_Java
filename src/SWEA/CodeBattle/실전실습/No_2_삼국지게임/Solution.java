@@ -95,8 +95,8 @@ public class Solution {
     public static void main(String[] args) throws Exception {
         int T, MARK;
 
-//        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/15638_삼국지게임_input_output/sample_input_one.txt"));
-        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/15638_삼국지게임_input_output/sample_input.txt"));
+//        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/실전문제/15638_삼국지게임_input_output/sample_input_one.txt"));
+        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/실전문제/15638_삼국지게임_input_output/sample_input.txt"));
         sc = new Scanner(System.in);
 
         T = sc.nextInt();

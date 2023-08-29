@@ -64,8 +64,8 @@ class Solution {
         int TC, MARK;
 
         //System.setIn(new java.io.FileInputStream("res/sample_input.txt"));
-//        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/17697_공지방송_input_output/sample_input_one.txt"));
-        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/17697_공지방송_input_output/sample_input.txt"));
+//        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/실전문제/17697_공지방송_input_output/sample_input_one.txt"));
+        System.setIn(new java.io.FileInputStream("/Users/seoyoseb/Desktop/DX특강_CodeBattle/실전문제/17697_공지방송_input_output/sample_input.txt"));
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
