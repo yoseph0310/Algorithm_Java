@@ -36,7 +36,7 @@ public class 선입선출스케줄링 {
                 m--;
             }
         }
-        
+
 
         return answer;
     }
