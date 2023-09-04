@@ -43,19 +43,11 @@ public class 이중우선순위큐 {
                 }
             }
 
-            // 두 큐가 모두 비어있는 경우
-            if (min_pq.isEmpty() && max_pq.isEmpty()) {
-                answer[0] = 0;
-                answer[1] = 0;
-            }
-            // 최소큐만 비어있는 경우
-            else if (min_pq.isEmpty()) {
+           if (min_pq.isEmpty()) {
                 answer[0] = max_pq.peek().value;
-                answer[1] = 0;
             }
             // 최대큐만 비어있는 경우
             else if (max_pq.isEmpty()) {
-                answer[0] = 0;
                 answer[1] = min_pq.peek().value;
             }
             // 모두 비어있지 않는 경우
