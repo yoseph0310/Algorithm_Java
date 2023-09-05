@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-public class BJ_1647_도시분할계획 {
+public class BJ_1647_도시분할계획_Prim {
 
     static class Node implements Comparable<Node> {
         int to, weight;
