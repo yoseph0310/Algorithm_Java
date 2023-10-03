@@ -12,7 +12,6 @@ public class B_2022_하반기_1번_싸움땅 {
     static ArrayList<Integer>[][] board;
 
     static int[][] visited;
-    static int[] playerScore;
     static Player[] players;
 
     static int[] dx = {-1, 0, 1, 0};
@@ -34,7 +33,6 @@ public class B_2022_하반기_1번_싸움땅 {
         }
 
         visited = new int[N + 1][N + 1];
-        playerScore = new int[M + 1];
         players = new Player[M + 1];
 
         for (int i = 1; i <= N; i++) {
