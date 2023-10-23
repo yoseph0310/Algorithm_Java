@@ -128,7 +128,9 @@ public class 왕실의_기사대결 {
     static Night[] nightPool;
     static Night orderedNight;
 
-    // 기사들이 이동해야 하는 순서를 위해 linkedHashSet 사용
+    // 이동해야하는 기사들을 따로 저장하기 위한 자료구조가 필요함.
+    // 같은 id의 기사가 저장될 수 있음으로 중복방지를 위해 HashSet 을 사용해야함
+    // 이동 영역을 마스킹할때 겹쳐지지 않도록 순서가 보장되어야함. 따라서 LinkedHashSet 사용
     static LinkedHashSet<Night> movingNightSet;
 
     // 상 우 하 좌
