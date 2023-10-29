@@ -1,4 +1,4 @@
-package CodeTree.삼성스터디;
+package CodeTree.삼성스터디.왕실의_기사대결;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
