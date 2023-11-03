@@ -1,4 +1,4 @@
-package Programmers.LV3;
+package Programmers.LV3.등굣길;
 
 public class 등굣길 {
     /**
