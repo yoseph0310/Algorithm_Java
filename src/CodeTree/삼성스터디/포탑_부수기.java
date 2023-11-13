@@ -64,7 +64,7 @@ import java.util.*;
  * - answer : 전체 과정이 종료된 후 남아있는 포탑 중 가장 강한 포탑의 공격력을 출력한다. 만약 부서지지 않은 포탑이 1개가 되면 즉시 중지된다.
  *
  */
-public class 포탑부수기 {
+public class 포탑_부수기 {
 
     static class Point {
         int x, y;
