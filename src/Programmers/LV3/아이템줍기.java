@@ -33,11 +33,6 @@ public class 아이템줍기 {
             start = new Point(characterX * 2, characterY * 2, 0);
             end = new Point(itemX * 2, itemY * 2, 0);
 
-            int minX = Integer.MAX_VALUE;
-            int minY = Integer.MAX_VALUE;
-            int maxX = 0;
-            int maxY = 0;
-
             // 일단 주어진 입력대로 테두리만 그린다.
             for (int i = 0; i < rectangle.length; i++) {
                 int x1 = rectangle[i][0] * 2;
