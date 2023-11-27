@@ -24,30 +24,41 @@ public class Test {
 class Buffer {
     int[] buf;
     int size, count, in, out;
+    Semaphore mutex;
 
     Buffer(int size) {
         buf = new int[size];
         this.size = size;
         count = in = out = 0;
+        mutex = new Semaphore(1);
     }
 
     void insert(int item) {
         // check if buf is full
         while (count == size);
         // buf is not full
-        buf[in] = item;
-        in = (in + 1) % size;
-        count++;
+        try {
+            mutex.acquire();        // 임계구역 진입 요청
+            buf[in] = item;
+            in = (in + 1) % size;
+            count++;
+            mutex.release();        // 임계구역 나가기
+        } catch (InterruptedException e) {}
     }
 
     int remove() {
         // check if buf is empty
         while (count == 0);
         // buf is not empty
-        int item = buf[out];
-        out = (out + 1) % size;
-        count--;
-        return item;
+        try {
+            mutex.acquire();
+            int item = buf[out];
+            out = (out + 1) % size;
+            count--;
+            mutex.release();
+            return item;
+        } catch (InterruptedException e) {}
+        return -1;
     }
 }
 
