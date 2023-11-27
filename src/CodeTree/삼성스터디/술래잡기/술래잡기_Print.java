@@ -54,7 +54,7 @@ import java.util.StringTokenizer;
  *   1,2번을 총 k번 반복
  *
  */
-public class 술래잡기 {
+public class 술래잡기_Print {
 
     static class Point {
         int x, y;
@@ -170,19 +170,31 @@ public class 술래잡기 {
     public static void main(String[] args) throws Exception {
         input();
 
+        // 초기 상태 출력
+//        printStatus();
+//        System.out.println("==============================");
+
         for (int turn = 1; turn <= K; turn++) {
+//            System.out.println("================== " + turn + " 번 째 턴 ==================");
             calDist();
 
             // 도망자 이동
             for (Runner r: runnerList) {
                 if (r.s_dist <= 3) moveRunner(r);
             }
+//            System.out.println("1. 도망자 이동 후");
+//            printStatus();
 
             // 술래 이동
             moveSeeker();
+//            System.out.println("2. 술래 이동 후");
+//            printStatus();
 
             // 술래가 보는 방향으로 최대 3칸 이내의 도망자를 잡는다. (해당 턴에 잡은 도망자 수 * 턴)
             catchRunner(turn);
+//            System.out.println("3. 도망자 잡은 후");
+//            printStatus();
+//            System.out.println("================================================");
         }
 
         System.out.println(ans);
@@ -299,5 +311,52 @@ public class 술래잡기 {
         for (Runner r: runnerList) {
             r.s_dist = Math.abs(r.x - seeker.x) + Math.abs(r.y - seeker.y);
         }
+    }
+
+    static void printStatus() {
+        printRunnerStatus();
+        printRunnerBoard();
+        printSeekerStatus();
+        printSeekerBoard();
+    }
+
+    static void printRunnerBoard() {
+        System.out.println(":: 도망자 위치 정보 ::");
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= N; j++) {
+                System.out.print(runnerBoard[i][j].size() + "\t");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    static void printRunnerStatus() {
+        System.out.println(":: 도망자 상태 ::");
+        for (Runner r: runnerList) {
+            System.out.println(r.toString());
+        }
+        System.out.println();
+    }
+
+    static void printSeekerBoard() {
+        System.out.println(":: 술래 위치 정보 ::");
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= N; j++) {
+                if (i == seeker.x && j == seeker.y && seeker.dir == 0) System.out.print("상\t");
+                else if (i == seeker.x && j == seeker.y && seeker.dir == 1) System.out.print("우\t");
+                else if (i == seeker.x && j == seeker.y && seeker.dir == 2) System.out.print("하\t");
+                else if (i == seeker.x && j == seeker.y && seeker.dir == 3) System.out.print("좌\t");
+                else System.out.print("0\t");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    static void printSeekerStatus() {
+        System.out.println(":: 술래 상태 ::");
+        System.out.println(seeker.toString());
+        System.out.println();
     }
 }
