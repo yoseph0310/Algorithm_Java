@@ -37,14 +37,18 @@ class Philosopher extends Thread {
     public void run() {
         try {
             while (true) {
-                l_stick.acquire();
-                r_stick.acquire();
+                if (id % 2 == 0) {
+                    l_stick.acquire();
+                    r_stick.acquire();
+                }
+                else {
+                    r_stick.acquire();
+                    l_stick.acquire();
+                }
 
                 eating();
-
                 l_stick.release();
                 r_stick.release();
-
                 thinking();
             }
         } catch (InterruptedException e) {}
