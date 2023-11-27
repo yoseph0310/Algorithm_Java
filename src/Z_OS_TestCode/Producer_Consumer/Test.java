@@ -24,38 +24,38 @@ public class Test {
 class Buffer {
     int[] buf;
     int size, count, in, out;
-    Semaphore mutex;
+    Semaphore mutex, full, empty;
 
     Buffer(int size) {
         buf = new int[size];
         this.size = size;
         count = in = out = 0;
         mutex = new Semaphore(1);
+        full = new Semaphore(0);
+        empty = new Semaphore(size);
     }
 
     void insert(int item) {
-        // check if buf is full
-        while (count == size);
-        // buf is not full
         try {
+            empty.acquire();        // 버퍼의 비어있는 공간을 1 감소 시킨다. (비어있는 공간이 없다면 block)
             mutex.acquire();        // 임계구역 진입 요청
             buf[in] = item;
             in = (in + 1) % size;
             count++;
             mutex.release();        // 임계구역 나가기
+            full.release();         // 버퍼의 찬 공간을 1 증가 시킨다.
         } catch (InterruptedException e) {}
     }
 
     int remove() {
-        // check if buf is empty
-        while (count == 0);
-        // buf is not empty
         try {
+            full.acquire();         // 버퍼의 찬 공간을 1 감소 시킨다. (버퍼가 모두 비어있으면 block)
             mutex.acquire();
             int item = buf[out];
             out = (out + 1) % size;
             count--;
             mutex.release();
+            empty.release();        // 버퍼의 비어있는 공간을 1 증가시킨다.
             return item;
         } catch (InterruptedException e) {}
         return -1;
