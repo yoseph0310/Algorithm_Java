@@ -1,4 +1,4 @@
-package BackJoon.실버.S1;
+package BackJoon.실버.S1.BJ_2178_미로탐색;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
