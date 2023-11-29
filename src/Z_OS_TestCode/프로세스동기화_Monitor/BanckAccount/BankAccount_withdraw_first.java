@@ -1,11 +1,11 @@
-package Z_OS_TestCode.프로세스동기화_Monitor;
+package Z_OS_TestCode.프로세스동기화_Monitor.BanckAccount;
 
 /**
  * 모니터를 활용한 상호배제 (Mutual Exclusion) 문제 해결
  *
  * - 상호배제 (Mutual Exclusion) : 공유 자원에 대해 동시에 한 프로세스(스레드) 만 접근하도록 하는 것
  */
-public class BankAccount_deposit_first {
+public class BankAccount_withdraw_first {
     static class Test {
         public static void main(String[] args) throws InterruptedException {
             BankAccount b = new BankAccount();
@@ -27,21 +27,21 @@ public class BankAccount_deposit_first {
         int balance;
 
         synchronized void deposit(int amt) {
-            int tmp = balance + amt;
-            System.out.print("+");
-            balance = tmp;
-            notify();
-        }
-
-        synchronized void withdraw(int amt) {
-            while (balance <= 0) {
+            while (balance == 0) {
                 try {
                     wait();
                 } catch (InterruptedException e) {}
             }
+            int tmp = balance + amt;
+            System.out.print("+");
+            balance = tmp;
+        }
+
+        synchronized void withdraw(int amt) {
             int tmp = balance - amt;
             System.out.print("-");
             balance = tmp;
+            notify();
         }
 
         int getBalance() {

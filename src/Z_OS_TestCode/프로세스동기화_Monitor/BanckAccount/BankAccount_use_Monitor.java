@@ -1,4 +1,4 @@
-package Z_OS_TestCode.프로세스동기화_Monitor;
+package Z_OS_TestCode.프로세스동기화_Monitor.BanckAccount;
 
 /**
  * 모니터를 활용한 상호배제 (Mutual Exclusion) 문제 해결
