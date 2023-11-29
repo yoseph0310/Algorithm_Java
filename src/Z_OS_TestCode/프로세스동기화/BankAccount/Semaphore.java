@@ -1,4 +1,4 @@
-package Z_OS_TestCode.BankAccount;
+package Z_OS_TestCode.프로세스동기화.BankAccount;
 
 public class Semaphore {
     int value;

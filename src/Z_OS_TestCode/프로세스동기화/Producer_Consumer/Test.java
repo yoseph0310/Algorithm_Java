@@ -1,4 +1,4 @@
-package Z_OS_TestCode.Producer_Consumer;
+package Z_OS_TestCode.프로세스동기화.Producer_Consumer;
 
 import java.util.concurrent.Semaphore;
 

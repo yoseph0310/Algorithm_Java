@@ -1,4 +1,4 @@
-package Z_OS_TestCode.Philosopher;
+package Z_OS_TestCode.프로세스동기화.Philosopher;
 
 import java.util.concurrent.Semaphore;
 

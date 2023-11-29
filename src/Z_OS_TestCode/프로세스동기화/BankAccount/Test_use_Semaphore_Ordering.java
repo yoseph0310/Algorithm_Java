@@ -1,13 +1,13 @@
-package Z_OS_TestCode.BankAccount;
+package Z_OS_TestCode.프로세스동기화.BankAccount;
 
 import java.util.concurrent.Semaphore;
 
-public class Test_use_Semaphore {
+public class Test_use_Semaphore_Ordering {
     public static void main(String[] args) throws InterruptedException {
-        BankAccount b = new BankAccount();
+        BankAccount2 b = new BankAccount2();
 
-        Parent p = new Parent(b);
-        Child c = new Child(b);
+        Parent2 p = new Parent2(b);
+        Child2 c = new Child2(b);
 
         p.start();      // start() : 쓰레드 실행 메소드
         c.start();
@@ -21,36 +21,37 @@ public class Test_use_Semaphore {
 }
 
 // 계좌
-class BankAccount {
+class BankAccount2 {
     int balance;
 
-    Semaphore sem;
+    Semaphore sem, semOrder;
 
-    BankAccount() {     // BankAccount 클래스가 호출되면 세마포를 만든다.
-        sem = new Semaphore(1);     // value 값을 1로 초기화한다.
+    BankAccount2() {
+        sem = new Semaphore(1);
+        semOrder = new Semaphore(0);        // Ordering 을 위한 세마포
     }
 
     void deposit(int amount) {
         try {
             sem.acquire();      // 임계구역 진입 요청
         } catch (InterruptedException e) {}
-        /* 임계 구역 */
+
         int temp = balance + amount;
         System.out.print("+");
         balance = temp;
-
-        sem.release();          // 임계구역 나가기.
+        sem.release();
+        semOrder.release();     // block 된 출금 프로세스가 있다면 깨워준다.
     }
 
     void withdraw(int amount) {
         try {
+            semOrder.acquire();     // 출금을 먼저하려고 하면 block 한다.
             sem.acquire();
         } catch (InterruptedException e) {}
         /* 임계 구역 */
         int temp = balance - amount;
         System.out.print("-");
         balance = temp;
-
         sem.release();
     }
 
@@ -61,30 +62,30 @@ class BankAccount {
 }
 
 // 입금 프로세스
-class Parent extends Thread {
-    BankAccount b;
+class Parent2 extends Thread {
+    BankAccount2 b;
 
-    Parent(BankAccount b) {
+    Parent2(BankAccount2 b) {
         this.b = b;
     }
 
     public void run() {     // run() : 쓰레드가 실제로 동작하는 부분 (치환)
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             b.deposit(1000);
         }
     }
 }
 
 // 출금 프로세스
-class Child extends Thread {
-    BankAccount b;
+class Child2 extends Thread {
+    BankAccount2 b;
 
-    Child(BankAccount b) {
+    Child2(BankAccount2 b) {
         this.b = b;
     }
 
     public void run() {
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             b.withdraw(1000);
         }
     }

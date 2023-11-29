@@ -1,13 +1,13 @@
-package Z_OS_TestCode.BankAccount;
+package Z_OS_TestCode.프로세스동기화.BankAccount;
 
 import java.util.concurrent.Semaphore;
 
-public class Test_use_Semaphore_Ordering {
+public class Test_use_Semaphore_Ordering_2 {
     public static void main(String[] args) throws InterruptedException {
-        BankAccount2 b = new BankAccount2();
+        BankAccount3 b = new BankAccount3();
 
-        Parent2 p = new Parent2(b);
-        Child2 c = new Child2(b);
+        Parent3 p = new Parent3(b);
+        Child3 c = new Child3(b);
 
         p.start();      // start() : 쓰레드 실행 메소드
         c.start();
@@ -21,38 +21,40 @@ public class Test_use_Semaphore_Ordering {
 }
 
 // 계좌
-class BankAccount2 {
+class BankAccount3 {
     int balance;
 
-    Semaphore sem, semOrder;
+    Semaphore sem, semDeposit, semWithdraw;
 
-    BankAccount2() {
+    BankAccount3() {
         sem = new Semaphore(1);
-        semOrder = new Semaphore(0);        // Ordering 을 위한 세마포
+        semDeposit = new Semaphore(0);
+        semWithdraw = new Semaphore(0);
     }
 
     void deposit(int amount) {
         try {
             sem.acquire();      // 임계구역 진입 요청
+            int temp = balance + amount;
+            System.out.print("+");;
+            balance = temp;
+            sem.release();
+            semWithdraw.release();
+            semDeposit.acquire();      // 입금 후에는 반드시 출금해야 하므로 자신을 block.
         } catch (InterruptedException e) {}
-
-        int temp = balance + amount;
-        System.out.print("+");
-        balance = temp;
-        sem.release();
-        semOrder.release();     // block 된 출금 프로세스가 있다면 깨워준다.
     }
 
     void withdraw(int amount) {
         try {
-            semOrder.acquire();     // 출금을 먼저하려고 하면 block 한다.
+            semWithdraw.acquire();     // 입금보다 먼저 수행하는 것을 막는다.
             sem.acquire();
         } catch (InterruptedException e) {}
-        /* 임계 구역 */
+
         int temp = balance - amount;
         System.out.print("-");
         balance = temp;
         sem.release();
+        semDeposit.release();       // 출금 수행이 완료되면 block 된 입금 프로세스를 깨운다.
     }
 
     int getBalance() {
@@ -62,10 +64,10 @@ class BankAccount2 {
 }
 
 // 입금 프로세스
-class Parent2 extends Thread {
-    BankAccount2 b;
+class Parent3 extends Thread {
+    BankAccount3 b;
 
-    Parent2(BankAccount2 b) {
+    Parent3(BankAccount3 b) {
         this.b = b;
     }
 
@@ -77,10 +79,10 @@ class Parent2 extends Thread {
 }
 
 // 출금 프로세스
-class Child2 extends Thread {
-    BankAccount2 b;
+class Child3 extends Thread {
+    BankAccount3 b;
 
-    Child2(BankAccount2 b) {
+    Child3(BankAccount3 b) {
         this.b = b;
     }
 
