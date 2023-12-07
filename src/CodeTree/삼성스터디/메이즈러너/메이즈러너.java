@@ -84,7 +84,6 @@ public class 메이즈러너 {
             if (isFinished()) break;
 
             rotate();
-            printBoard(maze);
         }
 
         int[] exit = findExit();
@@ -195,11 +194,6 @@ public class 메이즈러너 {
 
             if (minX != 0) break;
         }
-
-        System.out.println("minX = " + minX);
-        System.out.println("minY = " + minY);
-        System.out.println("minDist = " + minDist);
-        printBoard(maze);
         rotateMaze(minX, minY, minDist);
     }
 
