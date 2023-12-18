@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class BJ_7569_토마토 {
+public class BJ_7569_토마토_2 {
 
     static int M, N, H, ans;
     static int[][][] board;
