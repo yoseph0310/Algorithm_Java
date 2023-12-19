@@ -1,7 +1,7 @@
 package Programmers.LV3;
 import java.util.*;
 
-public class 베스트앨범 {
+public class 베스트앨범_재풀이 {
     class Solution {
 
         HashMap<String, Genre> genresHM;
