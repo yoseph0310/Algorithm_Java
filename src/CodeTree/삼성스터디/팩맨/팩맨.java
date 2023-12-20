@@ -3,32 +3,31 @@ package CodeTree.삼성스터디.팩맨;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class 팩맨 {
 
-    // 상 좌상 좌 좌하 하 우하 우 우상
-    static final int[] mdx = {-1, -1, 0, 1, 1, 1, 0, -1};
-    static final int[] mdy = {0, -1, -1, -1, 0, 1, 1, 1};
+    static final int MAX_LIFE = 2;
+    static final int P_DIR_SET = 4;
+    static final int M_DIR_SET = 8;
+    static final int MAX_T = 25;
+
+    // 반시계 8방
+    static int[] mdx = {-1, -1, 0, 1, 1, 1, 0, -1};
+    static int[] mdy = {0, -1, -1, -1, 0, 1, 1, 1};
 
     // 상 좌 하 우
-    static final int[] pdx = {-1, 0, 1, 0};
-    static final int[] pdy = {0, -1, 0, 1};
+    static int[] pdx = {-1, 0, 1, 0};
+    static int[] pdy = {0, -1, 0, 1};
 
-    static final int MAX_DEAD_TURN = 2;
-    static final int MAX_LEN = 4;
-    static final int MAX_TIME = 25;
-    static final int M_DIR_IDX = 8;
-    static final int P_DIR_IDX = 4;
-
-    static int M, T;
     static int N = 4;
-    static int turn = 1;
+    static int M, T;
+    static int px, py;
+    static int tNum = 1;
 
-    static int[][][][] monsterBoard = new int[MAX_TIME + 1][MAX_LEN][MAX_LEN][M_DIR_IDX];
-    static int[][][] deadBoard = new int[MAX_LEN][MAX_LEN][MAX_DEAD_TURN + 1];
-    static Point packMan;
-
+    static int[][][][] monsterBoard = new int[MAX_T + 1][N][N][M_DIR_SET];
+    static int[][][] deadBoard = new int[N][N][MAX_LIFE + 1];
 
     static void input() throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -38,186 +37,184 @@ public class 팩맨 {
         T = Integer.parseInt(st.nextToken());
 
         st = new StringTokenizer(br.readLine());
-        int px = Integer.parseInt(st.nextToken()) - 1;
-        int py = Integer.parseInt(st.nextToken()) - 1;
-        packMan = new Point(px, py);
+        px = Integer.parseInt(st.nextToken()) - 1;
+        py = Integer.parseInt(st.nextToken()) - 1;
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int mx = Integer.parseInt(st.nextToken()) - 1;
-            int my = Integer.parseInt(st.nextToken()) - 1;
-            int md = Integer.parseInt(st.nextToken()) - 1;
-            monsterBoard[0][mx][my][md]++;
-        }
 
+            int x = Integer.parseInt(st.nextToken()) - 1;
+            int y = Integer.parseInt(st.nextToken()) - 1;
+            int d = Integer.parseInt(st.nextToken()) - 1;
+
+            monsterBoard[0][x][y][d]++;
+        }
     }
+
     public static void main(String[] args) throws Exception {
         input();
 
-        while (turn <= T) {
-            process();
-            turn++;
+        while (tNum <= T) {
+            solve();
+            tNum++;
         }
 
-        System.out.println(getAnswer());
+        System.out.println(cntMonster());
     }
 
-    static void process() {
+    static void solve() {
         moveMonster();
-        movePackMan();
-        decreaseDead();
-        hatchMonster();
+        movePack();
+        deadMonster();
+        cloneMonster();
     }
 
-    // moveMonster 관련 START
     static void moveMonster() {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                for (int k = 0; k < M_DIR_IDX; k++) {
-                    Monster nextPoint = getNextPoint(i, j, k);
+                for (int k = 0; k < M_DIR_SET; k++) {
+                    Monster nPoint = getNextPoint(i, j, k);
 
-                    int x = nextPoint.x;
-                    int y = nextPoint.y;
-                    int dir = nextPoint.dir;
+                    int x = nPoint.x;
+                    int y = nPoint.y;
+                    int nd = nPoint.dir;
 
-                    monsterBoard[turn][x][y][dir] += monsterBoard[turn - 1][x][y][k];
+                    monsterBoard[tNum][x][y][nd] += monsterBoard[tNum - 1][i][j][k];
                 }
             }
         }
     }
 
-    static Monster getNextPoint(int x, int y, int dir) {
-        for (int cd = 0; cd < M_DIR_IDX; cd++) {
-            int nd = (dir + cd + M_DIR_IDX) % M_DIR_IDX;
+    static Monster getNextPoint(int x, int y, int moveDir) {
+        for (int cd = 0; cd < M_DIR_SET; cd++) {
+            int nd = (moveDir + cd + M_DIR_SET) % M_DIR_SET;
+
             int nx = x + mdx[nd];
             int ny = y + mdy[nd];
 
             if (canMove(nx, ny)) return new Monster(nx, ny, nd);
         }
 
-        return new Monster(x, y, dir);
+        return new Monster(x, y, moveDir);
     }
 
-    static boolean canMove(int x, int y) {
-        // 경계선 안이고 시체가 아니고 팩맨이 없으면 이동 가능하다.
-        return isBoundary(x, y) && deadBoard[x][y][0] == 0 && deadBoard[x][y][1] == 0 && !new Point(x, y).isSame(packMan);
-    }
+    static void movePack() {
+        int max = -1;
+        Route best = new Route(-1, - 1, -1);
 
-    static boolean isBoundary(int x, int y) {
-        return 0 <= x && x < N && 0 <= y && y < N;
-    }
-    // moveMonster 관련 END
+        for (int i = 0; i < P_DIR_SET; i++) {
+            for (int j = 0; j < P_DIR_SET; j++) {
+                for (int k = 0; k < P_DIR_SET; k++) {
+                    int mCnt = eatCntMonster(i, j, k);
 
-    // movePackMan 관련 START
-    static void movePackMan() {
-        int maxCnt = -1;
-        Route best = new Route(-1, -1, -1);
-
-        for (int i = 0; i < P_DIR_IDX; i++) {
-            for (int j = 0; j < P_DIR_IDX; j++) {
-                for (int k = 0; k < P_DIR_IDX; k++) {
-                    int monsterCnt = getMonsterCnt(i, j, k);
-
-                    if (maxCnt < monsterCnt) {
-                        maxCnt = monsterCnt;
+                    if (mCnt > max) {
+                        max = mCnt;
                         best = new Route(i, j, k);
                     }
                 }
             }
         }
 
-        eatMonster(best);
+        realKill(best);
     }
 
-    static int getMonsterCnt(int dir1, int dir2, int dir3) {
-        int[] dirs = new int[]{dir1, dir2, dir3};
-        int x = packMan.x;
-        int y = packMan.y;
-        int monsterCnt = 0;
+    static int eatCntMonster(int d1, int d2, int d3) {
+        int[] dirs = {d1, d2, d3};
+        int x = px;
+        int y = py;
+        int killCnt = 0;
 
-        ArrayList<Point> visited = new ArrayList<>();
+        List<Point> vList = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
             int nx = x + pdx[dirs[i]];
             int ny = y + pdy[dirs[i]];
 
             if (!isBoundary(nx, ny)) return -1;
-
-            if (!contains(visited, new Point(nx, ny))) {
-                for (int j = 0; j < M_DIR_IDX; j++) {
-                    monsterCnt += monsterBoard[turn][nx][ny][j];
+            if (!visited(vList, new Point(nx, ny))) {
+                for (int j = 0; j < M_DIR_SET; j++) {
+                    killCnt += monsterBoard[tNum][nx][ny][j];
                 }
 
-                visited.add(new Point(nx, ny));
+                vList.add(new Point(nx, ny));
             }
 
             x = nx;
             y = ny;
         }
 
-        return monsterCnt;
+        return killCnt;
     }
-    static boolean contains(ArrayList<Point> p, Point point) {
-        for (int i = 0; i < p.size(); i++) {
-            if (p.get(i).isSame(point)) return true;
-        }
 
+    static boolean visited(List<Point> vList, Point p) {
+        for (int i = 0; i < vList.size(); i++) {
+            if (vList.get(i).isSame(p)) return true;
+        }
         return false;
     }
 
-    static void eatMonster(Route route) {
-        int dir1 = route.dir1;
-        int dir2 = route.dir2;
-        int dir3 = route.dir3;
+    static void realKill(Route r) {
+        int d1 = r.d1;
+        int d2 = r.d2;
+        int d3 = r.d3;
 
-        int[] dirs = new int[]{dir1, dir2, dir3};
+        int[] dirs = {d1, d2, d3};
         for (int i = 0; i < 3; i++) {
-            int nx = packMan.x + pdx[dirs[i]];
-            int ny = packMan.y + pdy[dirs[i]];
+            int nx = px + pdx[dirs[i]];
+            int ny = py + pdy[dirs[i]];
 
-            for (int j = 0; j < M_DIR_IDX; j++) {
-                deadBoard[nx][ny][MAX_DEAD_TURN] += monsterBoard[turn][nx][ny][j];
-                monsterBoard[turn][nx][ny][j] = 0;
+            for (int j = 0; j < M_DIR_SET; j++) {
+                deadBoard[nx][ny][MAX_LIFE] += monsterBoard[tNum][nx][ny][j];
+                monsterBoard[tNum][nx][ny][j] = 0;
             }
 
-            packMan.x = nx;
-            packMan.y = ny;
+            px = nx;
+            py = ny;
         }
     }
 
-    static void decreaseDead() {
+    static void deadMonster() {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                for (int k = 0; k < MAX_DEAD_TURN; k++) {
+                for (int k = 0; k < MAX_LIFE; k++) {
                     deadBoard[i][j][k] = deadBoard[i][j][k + 1];
                 }
-                deadBoard[i][j][MAX_DEAD_TURN] = 0;
+                deadBoard[i][j][MAX_LIFE] = 0;
             }
         }
     }
 
-    static void hatchMonster() {
+    static void cloneMonster() {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                for (int k = 0; k < M_DIR_IDX; k++) {
-                    monsterBoard[turn][i][j][k] += monsterBoard[turn - 1][i][j][k];
+                for (int k = 0; k < M_DIR_SET; k++) {
+                    monsterBoard[tNum][i][j][k] += monsterBoard[tNum - 1][i][j][k];
                 }
             }
         }
     }
 
-    static int getAnswer() {
+    static int cntMonster() {
         int cnt = 0;
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                for (int k = 0; k < M_DIR_IDX; k++) {
-                   cnt += monsterBoard[T][i][j][k];
+                for (int k = 0; k < M_DIR_SET; k++) {
+                    cnt += monsterBoard[T][i][j][k];
                 }
             }
         }
 
         return cnt;
+    }
+
+    static boolean canMove(int x, int y) {
+        return isBoundary(x, y) && deadBoard[x][y][0] == 0 && deadBoard[x][y][1] == 0
+                && !new Point(x, y).isSame(new Point(px, py));
+    }
+
+    static boolean isBoundary(int x, int y) {
+        return 0 <= x && x < N && 0 <= y && y < N;
     }
 
     static class Point {
@@ -243,12 +240,12 @@ public class 팩맨 {
     }
 
     static class Route {
-        int dir1, dir2, dir3;
+        int d1, d2, d3;
 
-        public Route(int dir1, int dir2, int dir3) {
-            this.dir1 = dir1;
-            this.dir2 = dir2;
-            this.dir3 = dir3;
+        public Route(int d1, int d2, int d3) {
+            this.d1 = d1;
+            this.d2 = d2;
+            this.d3 = d3;
         }
     }
 }
