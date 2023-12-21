@@ -1,4 +1,4 @@
-package BackJoon.골드.G5;
+package BackJoon.골드.G5.BJ_14503_로봇청소기;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
