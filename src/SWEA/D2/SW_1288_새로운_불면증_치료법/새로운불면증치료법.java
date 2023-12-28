@@ -1,4 +1,4 @@
-package SWEA.D2.SWEA_1288_새로운_불면증_치료법;
+package SWEA.D2.SW_1288_새로운_불면증_치료법;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
