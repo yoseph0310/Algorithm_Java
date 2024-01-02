@@ -1,4 +1,4 @@
-package BackJoon.골드.G3;
+package BackJoon.골드.G3.BJ_16235_나무_재테크;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
