@@ -35,15 +35,6 @@ public class No_1_삼각김밥_월드 {
             // 트리 구성
             mkTree();
 
-            int c = 0;
-            for (int i = 1; i <= MAX_NODE; i++) {
-                if (tree[i].level == 141) {
-                    System.out.println(tree[i].idx);
-
-                }
-            }
-
-
             // start 가 end 보다 작으면
             if (s < e) {
                 solve(s, e, 0, new boolean[MAX_NODE + 1]);
